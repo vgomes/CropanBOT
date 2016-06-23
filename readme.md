@@ -1,2 +1,2 @@
-# Laravel PHP Framework
-CropanBOT. It delivers Cropan.
+# CropanBOT
+It delivers Cropan.
