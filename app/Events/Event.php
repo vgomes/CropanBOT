@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace Cropan\Events;
 
 abstract class Event
 {

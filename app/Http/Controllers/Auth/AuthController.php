@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Cropan\Http\Controllers\Auth;
 
-use App\User;
+use Cropan\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use Cropan\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 

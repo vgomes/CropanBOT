@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Cropan;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -23,4 +23,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // relationships
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
+    }
 }

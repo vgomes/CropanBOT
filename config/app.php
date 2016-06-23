@@ -151,10 +151,10 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Cropan\Providers\AppServiceProvider::class,
+        Cropan\Providers\AuthServiceProvider::class,
+        Cropan\Providers\EventServiceProvider::class,
+        Cropan\Providers\RouteServiceProvider::class,
 
         /*
          * 3rd party
