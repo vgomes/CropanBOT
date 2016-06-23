@@ -12,12 +12,4 @@
 */
 
 Route::get('/', function () {
-    $items = \Illuminate\Database\Eloquent\Collection::make(Telegram::getUpdates());
-
-    $items->each(function (\Telegram\Bot\Objects\Update $update) {
-        $item = new \Cropan\Update();
-        $item->import($update);
-    });
-
-//    var_dump(isAllowedUser(15629533));
 });
