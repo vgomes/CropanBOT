@@ -18,10 +18,10 @@ class CreateUpdatesTable extends Migration
             $table->bigInteger('update_id')->unique();
             $table->bigInteger('user_id');
             $table->string('type');
-            $table->bigInteger('reply_to')->nullable();
+            $table->string('reply_to')->nullable();
             $table->text('text')->nullable();
             $table->longText('content');
-            $table->date('date');
+            $table->timestamp('date');
 
             $table->softDeletes();
             $table->timestamps();

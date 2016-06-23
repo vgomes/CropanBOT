@@ -2,6 +2,7 @@
 
 namespace Cropan;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
@@ -24,7 +25,16 @@ class Update extends Model
         $type = $update->getMessage()->getChat()->getType();
 
         if (!is_null($update->getMessage()->getReplyToMessage())) {
-            $reply_to = $update->getMessage()->getReplyToMessage()->getMessageId();
+            $reply_to = $update->getMessage()->getReplyToMessage()->getText();
+            // check if it contains a picture url
+            preg_match('/http(?:s)?:\/\/[0-9a-zA-Z;.\/\-?:@=_#&%~,+$]+/', $reply_to, $matches);
+
+            if (count($matches) > 0) {
+                $update->text = $matches[0];
+            } else {
+                $reply_to = null;
+            }
+
         } else {
             $reply_to = null;
         }
@@ -40,7 +50,7 @@ class Update extends Model
                 'reply_to' => $reply_to,
                 'text' => $text,
                 'content' => $content,
-                'date' => $date
+                'date' => Carbon::createFromTimestamp($date)
             ]);
         } catch (QueryException $e) {
             // Already stored
