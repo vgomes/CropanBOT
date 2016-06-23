@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $items = \Illuminate\Database\Eloquent\Collection::make(Telegram::getUpdates());
+
+    $items->each(function (\Telegram\Bot\Objects\Update $update) {
+        $item = new \Cropan\Update();
+        var_dump($update);
+        $item->import($update);
+    });
+
 });
