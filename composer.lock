@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1c7135014d3b58a6ce3dccdabeb32952",
-    "content-hash": "c11e28524b9b963287622d7013eb4072",
+    "hash": "f46e852564422dcaf0f945a7b2bf45cb",
+    "content-hash": "757d59abddba3b912e5eee6d0024331b",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1809,6 +1809,95 @@
                 "shell"
             ],
             "time": "2016-03-09 05:03:14"
+        },
+        {
+            "name": "ptcong/php-http-class",
+            "version": "3.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptcong/php-http-client.git",
+                "reference": "5bf8e080311e0ffd2540ce4a5bc1991e85e9d3bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptcong/php-http-client/zipball/5bf8e080311e0ffd2540ce4a5bc1991e85e9d3bf",
+                "reference": "5bf8e080311e0ffd2540ce4a5bc1991e85e9d3bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "EasyRequest": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phan Thanh Cong",
+                    "email": "ptcong90@gmail.com",
+                    "homepage": "http://ptcong.com"
+                }
+            ],
+            "description": "A simple and powerful Http Client library used for sending request and get response like a browser.",
+            "keywords": [
+                "curl",
+                "fsockopen",
+                "http",
+                "php",
+                "request"
+            ],
+            "time": "2016-04-07 04:12:51"
+        },
+        {
+            "name": "ptcong/php-image-uploader",
+            "version": "6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptcong/php-remote-image-uploader.git",
+                "reference": "4db896a6b079977b3c049c85d0f98ad1d1b76bfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptcong/php-remote-image-uploader/zipball/4db896a6b079977b3c049c85d0f98ad1d1b76bfa",
+                "reference": "4db896a6b079977b3c049c85d0f98ad1d1b76bfa",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "^1.5",
+                "php": ">=5.3",
+                "ptcong/php-http-class": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RemoteImageUploader\\": "src/RemoteImageUploader/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phan Thanh Cong",
+                    "email": "ptcong90@gmail.com",
+                    "homepage": "http://ptcong.com"
+                }
+            ],
+            "description": "Library for uploading image to picasa, flickr, imgur, imageshack",
+            "keywords": [
+                "http",
+                "image uploader",
+                "php",
+                "remote upload"
+            ],
+            "time": "2016-06-07 04:25:58"
         },
         {
             "name": "swiftmailer/swiftmailer",

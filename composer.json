@@ -10,7 +10,8 @@
         "barryvdh/laravel-debugbar": "^2.2",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
-        "irazasyed/telegram-bot-sdk": "^2.0"
+        "irazasyed/telegram-bot-sdk": "^2.0",
+        "ptcong/php-image-uploader": "^6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -25,7 +26,10 @@
         ],
         "psr-4": {
             "Cropan\\": "app/"
-        }
+        },
+        "files": [
+            "app/Support/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [

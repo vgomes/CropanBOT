@@ -16,8 +16,8 @@ Route::get('/', function () {
 
     $items->each(function (\Telegram\Bot\Objects\Update $update) {
         $item = new \Cropan\Update();
-        var_dump($update);
         $item->import($update);
     });
 
+//    var_dump(isAllowedUser(15629533));
 });
