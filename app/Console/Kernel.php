@@ -4,6 +4,7 @@ namespace Cropan\Console;
 
 use Cropan\Console\Commands\FetchTelegramUpdates;
 use Cropan\Console\Commands\GetImages;
+use Cropan\Console\Commands\ProcessVotes;
 use Cropan\Console\Commands\SendImagesToGroup;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -19,7 +20,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         FetchTelegramUpdates::class,
         GetImages::class,
-        SendImagesToGroup::class
+        SendImagesToGroup::class,
+        ProcessVotes::class
     ];
 
     /**

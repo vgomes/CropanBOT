@@ -51,7 +51,6 @@ class GetImages extends Command
 
                 try {
                     Picture::create([
-                        'update_id' => $update->update_id,
                         'url' => $url,
                         'user_id' => $update->user_id
                     ]);
