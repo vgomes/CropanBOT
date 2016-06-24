@@ -12,4 +12,6 @@
 */
 
 Route::get('/', function () {
+    $pictures = \Cropan\Picture::with(['votes'])->get();
+    return var_dump($pictures->toArray());
 });

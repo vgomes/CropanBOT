@@ -9,6 +9,7 @@ class Picture extends Model
 {
     protected $table = 'pictures';
     protected $fillable = ['update_id', 'url', 'user_id', 'sent_at', 'published_at'];
+    protected $appends = ['score'];
 
     // Relationships
     public function votes()
@@ -21,6 +22,13 @@ class Picture extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Attributes
+    public function getScoreAttribute()
+    {
+        return intval($this->yes + $this->no);
+    }
+
+    // Functions
     public function uploadToTumblr() {
         // publish to tumblr
         $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
