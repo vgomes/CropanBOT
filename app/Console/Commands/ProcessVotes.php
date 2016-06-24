@@ -43,6 +43,9 @@ class ProcessVotes extends Command
         $updates = Update::all();
 
         $updates->each(function (Update $update) {
+
+            $vote = null;
+
             if (!is_null($update->reply_to)) {
                 $picture = Picture::where('url', $update->reply_to)->first();
 
@@ -60,19 +63,21 @@ class ProcessVotes extends Command
                             break;
                     }
 
-                    try {
-                        Vote::create([
-                            'picture_id' => $picture->id,
-                            'user_id' => $update->user_id,
-                            'vote' => $vote
-                        ]);
-                    } catch (\PDOException $e) {
-                        // Already stored
+                    if (!is_null($vote)) {
+                        try {
+                            Vote::create([
+                                'picture_id' => $picture->id,
+                                'user_id' => $update->user_id,
+                                'vote' => $vote
+                            ]);
+                        } catch (\PDOException $e) {
+                            // Already stored
+                        }
                     }
                 }
             }
 
-//            $update->delete();
+            $update->delete();
         });
     }
 }

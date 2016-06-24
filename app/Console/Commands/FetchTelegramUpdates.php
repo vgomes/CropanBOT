@@ -40,7 +40,7 @@ class FetchTelegramUpdates extends Command
      */
     public function handle()
     {
-        $items = Collection::make(\Telegram::getUpdates(['offset' => -100]));
+        $items = Collection::make(\Telegram::getUpdates(['offset' => -20]));
 
         $items->each(function (Update $update) {
             $item = new UpdateItem();

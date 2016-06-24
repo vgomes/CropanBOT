@@ -12,6 +12,5 @@
 */
 
 Route::get('/', function () {
-    $pictures = \Cropan\Picture::orderBy('score', 'desc')->orderBy('yes', 'desc')->get();
-    return var_dump($pictures->toArray());
+    return 'Hola';
 });
