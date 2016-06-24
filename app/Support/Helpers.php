@@ -76,6 +76,11 @@ function uploadToImgur($url) {
         'refresh_token' => env('IMGUR_REFRESH_TOKEN')
     ]);
 
-    $url = $uploader->transload($url);
-    return $url;
+    try {
+        $result = $uploader->transload($url);
+    } catch (\Exception $e) {
+        \Log::error($e->getMessage());
+        $result = $url;
+    }
+    return $result;
 }
