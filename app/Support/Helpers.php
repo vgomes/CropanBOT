@@ -67,7 +67,8 @@ function urlFromTelegramDocument($document)
  * @param $url
  * @return string
  */
-function uploadToImgur($url) {
+function uploadToImgur($url)
+{
     $cacher = new FilesystemCache('/tmp');
     $uploader = Factory::create('Imgur', [
         'cacher' => $cacher,
