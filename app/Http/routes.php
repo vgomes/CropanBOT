@@ -12,6 +12,6 @@
 */
 
 Route::get('/', function () {
-    $pictures = \Cropan\Picture::with(['votes'])->get();
+    $pictures = \Cropan\Picture::orderBy('score', 'desc')->orderBy('yes', 'desc')->get();
     return var_dump($pictures->toArray());
 });

@@ -72,7 +72,7 @@ class ProcessVotes extends Command
                 }
             }
 
-            $update->delete();
+//            $update->delete();
         });
     }
 }

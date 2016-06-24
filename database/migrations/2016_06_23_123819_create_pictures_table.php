@@ -19,6 +19,7 @@ class CreatePicturesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->smallInteger('yes')->default(0);
             $table->smallInteger('no')->default(0);
+            $table->smallInteger('score')->default(0);
 
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('published_at')->nullable();
