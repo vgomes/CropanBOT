@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return 'Hola';
+    $pictures = \Cropan\Picture::all();
+    return var_dump($pictures->toArray());
 });
