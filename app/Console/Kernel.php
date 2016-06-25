@@ -32,7 +32,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('telegram:getupdates')->everyFiveMinutes();
+        $schedule->command('images:get')->everyFiveMinutes();
+        $schedule->command('images:votes')->everyTenMinutes();
+        $schedule->command('images:submit')->everyThirtyMinutes();
     }
 }
