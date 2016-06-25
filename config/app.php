@@ -161,7 +161,8 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Telegram\Bot\Laravel\TelegramServiceProvider::class
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
+        \Laravel\Socialite\SocialiteServiceProvider::class
 
     ],
 
@@ -213,8 +214,8 @@ return [
          * 3rd Party
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class
-
+        'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
+        'Socialite' => \Laravel\Socialite\Facades\Socialite::class
     ],
 
 ];

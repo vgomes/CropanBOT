@@ -9,7 +9,19 @@ use RemoteImageUploader\Factory;
 function getAllowedUsers()
 {
     $users = env('ALLOWED_USERS');
-    return explode('|', $users);
+    $users = explode('|', $users);
+
+    $allowed_users = [];
+
+    foreach ($users as $user) {
+        $aux = explode('#', $user);
+        $u['nickname'] = $aux[0];
+        $u['telegram_id'] = $aux[1];
+
+        $allowed_users[] = $u;
+    }
+
+    return $allowed_users;
 }
 
 /**
@@ -17,9 +29,30 @@ function getAllowedUsers()
  * @param $id
  * @return bool
  */
-function isAllowedUser($id)
+function isAllowedUserId($id)
 {
-    return in_array($id, getAllowedUsers());
+    $users = getAllowedUsers();
+
+    foreach ($users as $user) {
+        if ($user['telegram_id'] == $id) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function isAllowedUserNickname($nickname)
+{
+    $users = getAllowedUsers();
+
+    foreach ($users as $user) {
+        if (strtoupper($user['nickname']) == strtoupper($nickname)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**

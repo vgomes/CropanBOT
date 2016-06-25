@@ -36,19 +36,35 @@
 </head>
 
 <body>
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">CropanBOT</a>
+            <a class="navbar-brand" href="/">CropanBOT</a>
         </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ route('pages.index') }}">Home</a></li>
+                <li><a href="{{ route('pages.history') }}">History</a></li>
+                <li><a href="{{ route('pages.stats') }}">Stats</a></li>
+            </ul>
+            @if(Auth::check())
+            <ul class="nav navbar-nav navbar-right">
+                <li><img class="img-circle" src="{{ Auth::user()->avatar }}" /></li>
+                <li><li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ Auth::user()->nickname }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            @endif
+        </div><!--/.nav-collapse -->
     </div>
 </nav>
 

@@ -22,6 +22,10 @@ class Picture extends Model
         return $query->whereNotNull('sent_at');
     }
 
+    public function scopePublished($query) {
+        return $query->whereNotNull('published_at');
+    }
+
     // Relationships
     public function votes()
     {
