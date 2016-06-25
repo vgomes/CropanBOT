@@ -17,6 +17,11 @@ class Picture extends Model
         return ($this->yes + $this->no);
     }
 
+    // Scopes
+    public function scopeSent($query) {
+        return $query->whereNotNull('sent_at');
+    }
+
     // Relationships
     public function votes()
     {

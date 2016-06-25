@@ -12,7 +12,7 @@ class Pages extends Controller
     }
 
     public function history() {
-        $pictures = Picture::whereNotNull('sent_at')->orderBy('created_at', 'desc')->paginate(15);
+        $pictures = Picture::sent()->orderBy('created_at', 'desc')->paginate(15);
         
         return view('pages.history')->with('pictures', $pictures);
     }
