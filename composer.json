@@ -14,7 +14,8 @@
         "ptcong/php-image-uploader": "^6.0",
         "tumblr/tumblr": "^0.2.0",
         "laravel/socialite": "^2.0",
-        "khill/lavacharts" : "3.0.*"
+        "khill/lavacharts" : "3.0.*",
+        "socialiteproviders/twitter": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
