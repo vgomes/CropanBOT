@@ -7,6 +7,7 @@ use Cropan\Console\Commands\GetImages;
 use Cropan\Console\Commands\ProcessVotes;
 use Cropan\Console\Commands\SendImagesToGroup;
 
+use Cropan\Console\Commands\SubmitApprovedToTumblr;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -21,7 +22,8 @@ class Kernel extends ConsoleKernel
         FetchTelegramUpdates::class,
         GetImages::class,
         SendImagesToGroup::class,
-        ProcessVotes::class
+        ProcessVotes::class,
+        SubmitApprovedToTumblr::class
     ];
 
     /**

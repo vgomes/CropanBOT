@@ -9,6 +9,13 @@ class Picture extends Model
 {
     protected $table = 'pictures';
     protected $fillable = ['update_id', 'url', 'user_id', 'sent_at', 'published_at', 'created_at', 'updated_at'];
+    protected $appends = ['numVotes'];
+
+    // Attributes
+    public function getNumVotesAttribute()
+    {
+        return ($this->yes + $this->no);
+    }
 
     // Relationships
     public function votes()

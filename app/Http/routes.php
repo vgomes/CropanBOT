@@ -11,7 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    $pictures = \Cropan\Picture::all();
-    return var_dump($pictures->toArray());
-});
+Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
+Route::get('/history', ['as' => 'pages.index', 'uses' => 'Pages@history']);
