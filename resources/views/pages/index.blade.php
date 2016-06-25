@@ -8,8 +8,7 @@
                 @foreach($items as $item)
                     <div class="col-md-4">
                         <a href="{{ $item->url }}">
-                            <img class="img-thumbnail" src="{{ $item->url }}"
-                                 style="max-height: 300px; max-width: 100%; margin: 30px 10px"/>
+                            <img class="img-thumbnail img-responsive" src="{{ $item->url }}" />
                         </a>
                     </div>
                 @endforeach

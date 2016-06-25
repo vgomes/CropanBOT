@@ -5,6 +5,7 @@ namespace Cropan\Http\Controllers;
 use Cropan\Http\Requests;
 use Cropan\Picture;
 use Cropan\User;
+use Cropan\Vote;
 use League\OAuth1\Client\Credentials\CredentialsException;
 
 class Pages extends Controller
@@ -21,6 +22,43 @@ class Pages extends Controller
         $pictures = Picture::sent()->orderBy('sent_at', 'desc')->paginate(15);
 
         return view('pages.history')->with('pictures', $pictures);
+    }
+
+    public function stats()
+    {
+        $positiveRanking = Picture::orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->take(6)->get();
+        $negativeRanking = Picture::orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->take(6)->get();
+
+        $users = User::has('votes')->get();
+
+        $users->each(function (User $user) {
+            $yes = 0;
+            $no = 0;
+
+            $user->votes()->each(function (Vote $vote) use (&$yes, &$no) {
+                if ($vote->vote) {
+                    $yes += 1;
+                } else {
+                    $no += 1;
+                }
+            });
+
+            $user->yes = $yes;
+            $user->no = $no;
+            $user->yesPercent = $yes / ($yes + $no);
+            $user->noPercent = $no / ($yes + $no);
+
+            $user->sent = $user->pictures()->count();
+            $user->published = Picture::where('user_id', $user->telegram_id)->published()->count();
+
+            if ($user->sent > 0) {
+                $user->publishedPercent = $user->published / $user->sent;
+            } else {
+                $user->publishedPercent = 0;
+            }
+        });
+
+        return view('pages.stats')->with('users', $users)->with('positiveRanking', $positiveRanking)->with('negativeRanking', $negativeRanking);
     }
 
     public function TwitterLogin()
