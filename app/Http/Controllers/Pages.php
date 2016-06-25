@@ -6,6 +6,7 @@ use Cropan\Http\Requests;
 use Cropan\Picture;
 use Cropan\User;
 use Cropan\Vote;
+use Khill\Lavacharts\Lavacharts;
 use League\OAuth1\Client\Credentials\CredentialsException;
 
 class Pages extends Controller
@@ -58,7 +59,16 @@ class Pages extends Controller
             }
         });
 
-        return view('pages.stats')->with('users', $users)->with('positiveRanking', $positiveRanking)->with('negativeRanking', $negativeRanking);
+        $ratioTumblr = $users->sortByDesc('publishedPercent');
+        $ratioYLD = $users->sortByDesc('yesPercent');
+        $ratioNO = $users->sortByDesc('noPercent');
+
+        return view('pages.stats')
+            ->with('positiveRanking', $positiveRanking)
+            ->with('negativeRanking', $negativeRanking)
+            ->with('ratioTumblr', $ratioTumblr)
+            ->with('ratioYLD', $ratioYLD)
+            ->with('ratioNO', $ratioNO);
     }
 
     public function TwitterLogin()

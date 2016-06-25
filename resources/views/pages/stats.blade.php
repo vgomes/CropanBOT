@@ -76,4 +76,85 @@
                 @endForeach
         </div>
     </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="container">
+        <h2>Ratio enviadas al grupo/llegan a Tumblr</h2>
+        <hr>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Ratio</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($ratioTumblr as $user)
+                    <tr>
+                        <th scope="row">{{ $user->nickname }}</th>
+                        <td>{{ $user->publishedPercent }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="container">
+        <h2>Ratio de YLD</h2>
+        <hr>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Ratio</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($ratioYLD as $user)
+                    <tr>
+                        <th scope="row">{{ $user->nickname }}</th>
+                        <td>{{ $user->yesPercent }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="container">
+        <h2>Ratio de NO</h2>
+        <hr>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Ratio</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($ratioNO as $user)
+                    <tr>
+                        <th scope="row">{{ $user->nickname }}</th>
+                        <td>{{ $user->noPercent }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection

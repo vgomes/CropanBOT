@@ -162,7 +162,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
-        \Laravel\Socialite\SocialiteServiceProvider::class
+        \Laravel\Socialite\SocialiteServiceProvider::class,
+        \Khill\Lavacharts\Laravel\LavachartsServiceProvider::class
 
     ],
 
@@ -215,7 +216,8 @@ return [
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Telegram'  => Telegram\Bot\Laravel\Facades\Telegram::class,
-        'Socialite' => \Laravel\Socialite\Facades\Socialite::class
+        'Socialite' => \Laravel\Socialite\Facades\Socialite::class,
+        'Lava' => \Khill\Lavacharts\Laravel\LavachartsFacade::class
     ],
 
 ];
