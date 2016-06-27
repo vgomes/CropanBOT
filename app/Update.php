@@ -65,7 +65,7 @@ class Update extends Model
 
         static::creating(function (Update $update) {
             // check if user belongs to desired group
-            if (isAllowedUser($update->user_id)) {
+            if (isAllowedUserId($update->user_id)) {
 
                 if (is_null($update->text)) {
                     // if update contains a picture or url, store it
