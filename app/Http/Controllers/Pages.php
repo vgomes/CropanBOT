@@ -27,8 +27,8 @@ class Pages extends Controller
 
     public function stats()
     {
-        $positiveRanking = Picture::orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->take(6)->get();
-        $negativeRanking = Picture::orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->take(6)->get();
+        $positiveRanking = Picture::sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->take(6)->get();
+        $negativeRanking = Picture::sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->take(6)->get();
 
         $users = User::has('votes')->get();
 
