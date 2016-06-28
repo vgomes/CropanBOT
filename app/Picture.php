@@ -2,6 +2,7 @@
 
 namespace Cropan;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tumblr\API\Client;
 
@@ -71,6 +72,9 @@ class Picture extends Model
             'tags' => env('TUMBLR_TAGS'),
             'source' => $this->url
         ]);
+
+        $this->published_at = Carbon::now();
+        $this->save();
     }
 
     public function sendToGroup()
