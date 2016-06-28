@@ -38,5 +38,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('images:get')->everyFiveMinutes();
         $schedule->command('images:votes')->everyTenMinutes();
         $schedule->command('images:submit')->everyTenMinutes();
+        $schedule->command('images:tumblr')->everyThirtyMinutes();
     }
 }
