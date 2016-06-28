@@ -63,7 +63,7 @@ class Picture extends Model
 
     // Functions
     public function uploadToTumblr() {
-        // publish to tumblr
+        // publish to Tumblr
         $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
         $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
         $client->createPost(env('TUMBLR_BLOG'), [
