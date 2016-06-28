@@ -6,7 +6,6 @@ use Cropan\Http\Requests;
 use Cropan\Picture;
 use Cropan\User;
 use Cropan\Vote;
-use Khill\Lavacharts\Lavacharts;
 use League\OAuth1\Client\Credentials\CredentialsException;
 
 class Pages extends Controller
