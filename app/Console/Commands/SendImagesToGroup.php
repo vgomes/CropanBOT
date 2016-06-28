@@ -39,10 +39,14 @@ class SendImagesToGroup extends Command
      */
     public function handle()
     {
-        $picture = Picture::where('sent_at', null)->orderBy('created_at', 'asc')->get()->random(1);
+        $picture = Picture::where('sent_at', null)->orderBy('created_at', 'asc')->get();
 
-        $picture->sendToGroup();
-        $picture->sent_at = Carbon::now();
-        $picture->save();
+        if ($picture->count() > 0) {
+            $picture = $picture->random(1);
+
+            $picture->sendToGroup();
+            $picture->sent_at = Carbon::now();
+            $picture->save();
+        }
     }
 }

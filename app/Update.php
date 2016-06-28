@@ -54,7 +54,7 @@ class Update extends Model
             ]);
         } catch (QueryException $e) {
             // Already stored
-            \Log::error($e->getMessage());
+//            \Log::error($e->getMessage());
         }
     }
 

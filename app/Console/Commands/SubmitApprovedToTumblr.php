@@ -44,7 +44,7 @@ class SubmitApprovedToTumblr extends Command
             ->get();
         
         $pictures->each(function (Picture $picture) {
-            
+            $picture->uploadToTumblr();
         });
     }
 }
