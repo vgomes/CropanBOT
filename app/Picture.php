@@ -5,6 +5,7 @@ namespace Cropan;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tumblr\API\Client;
+use Tumblr\API\RequestException;
 
 class Picture extends Model
 {
@@ -19,11 +20,13 @@ class Picture extends Model
     }
 
     // Scopes
-    public function scopeSent($query) {
+    public function scopeSent($query)
+    {
         return $query->whereNotNull('sent_at');
     }
 
-    public function scopePublished($query) {
+    public function scopePublished($query)
+    {
         return $query->whereNotNull('published_at');
     }
 
@@ -62,35 +65,50 @@ class Picture extends Model
     }
 
     // Functions
-    public function uploadToTumblr() {
-        // publish to Tumblr
-        $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
-        $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
-        $client->createPost(env('TUMBLR_BLOG'), [
-            'type' => 'photo',
-            'state' => 'queue',
-            'tags' => env('TUMBLR_TAGS'),
-            'source' => $this->url
-        ]);
+    public function uploadToTumblr()
+    {
+        try {
+            // publish to Tumblr
+            $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
+            $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
+            $client->createPost(env('TUMBLR_BLOG'), [
+                'type' => 'photo',
+                'state' => 'queue',
+                'tags' => env('TUMBLR_TAGS'),
+                'source' => $this->url
+            ]);
 
-        $this->published_at = Carbon::now();
-        $this->save();
+            $this->published_at = Carbon::now();
+            $this->save();
+        } catch (RequestException $e) {
+            \Log::alert("Problem uploading: " . $this->url);
+        }
     }
 
     public function sendToGroup()
     {
-        $keyboard = [["YLD", "NO"]];
+        $a = [
+            "text" => "YLD",
+            "url" => "http://google.com"
+        ];
+        $b = [
+            "text" => "NO",
+            "url" => "http://marca.com"
+        ];
+        $options = [[$a, $b]];
 
-        $markup = \Telegram::replyKeyboardMarkup([
-            'keyboard' => $keyboard,
-            'one_time_keyboard' => true,
-            'resize_keyboard' => true
-        ]);
+        $keyboard = ["inline_keyboard" => $options];
+
+//        $markup = [
+//            'keyboard' => $keyboard,
+//            'one_time_keyboard' => true,
+//            'resize_keyboard' => true
+//        ];
 
         \Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_GROUP_ID'),
             'text' => $this->url,
-            'reply_markup' => $markup
+            'reply_markup' => json_encode($keyboard)
         ]);
     }
 }
