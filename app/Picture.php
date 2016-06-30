@@ -89,21 +89,15 @@ class Picture extends Model
     {
         $a = [
             "text" => "YLD",
-            "url" => "http://google.com"
+            "url" => env('APP_URL') . "/v/$this->id/yld"
         ];
         $b = [
             "text" => "NO",
-            "url" => "http://marca.com"
+            "url" => env('APP_URL') . "/v/$this->id/no"
         ];
         $options = [[$a, $b]];
 
         $keyboard = ["inline_keyboard" => $options];
-
-//        $markup = [
-//            'keyboard' => $keyboard,
-//            'one_time_keyboard' => true,
-//            'resize_keyboard' => true
-//        ];
 
         \Telegram::sendMessage([
             'chat_id' => env('TELEGRAM_GROUP_ID'),

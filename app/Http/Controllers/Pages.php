@@ -70,6 +70,29 @@ class Pages extends Controller
             ->with('ratioNO', $ratioNO);
     }
 
+    public function vote(Picture $image, $choice)
+    {
+        switch (strtoupper($choice)) {
+            case 'YLD' :
+                $choice = true;
+                break;
+
+            case 'NO' :
+                $choice = false;
+                break;
+        }
+
+        $vote = Vote::firstOrCreate([
+            'picture_id' => $image->id,
+            'user_id' => \Auth::user()->telegram_id
+        ]);
+
+        $vote->vote = $choice;
+        $vote->save();
+
+        return view('pages.vote')->with('picture', $image)->with('vote', $vote);
+    }
+
     public function TwitterLogin()
     {
         return \Socialite::driver('twitter')->redirect();
@@ -90,7 +113,7 @@ class Pages extends Controller
                 \Auth::login($local_user);
             }
 
-            return \Redirect::route('pages.index');
+            return \Redirect::intended();
         } catch (CredentialsException $e) {
             return \Redirect::route('pages.index');
         }
