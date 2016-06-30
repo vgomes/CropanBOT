@@ -5,6 +5,7 @@ namespace Cropan;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tumblr\API\Client;
+use Tumblr\API\RequestException;
 
 class Picture extends Model
 {
@@ -63,18 +64,22 @@ class Picture extends Model
 
     // Functions
     public function uploadToTumblr() {
-        // publish to Tumblr
-        $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
-        $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
-        $client->createPost(env('TUMBLR_BLOG'), [
-            'type' => 'photo',
-            'state' => 'queue',
-            'tags' => env('TUMBLR_TAGS'),
-            'source' => $this->url
-        ]);
+        try {
+            // publish to Tumblr
+            $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
+            $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
+            $client->createPost(env('TUMBLR_BLOG'), [
+                'type' => 'photo',
+                'state' => 'queue',
+                'tags' => env('TUMBLR_TAGS'),
+                'source' => $this->url
+            ]);
 
-        $this->published_at = Carbon::now();
-        $this->save();
+            $this->published_at = Carbon::now();
+            $this->save();
+        } catch (RequestException $e) {
+            \Log::alert("Problem uploading: " . $this->url);
+        }
     }
 
     public function sendToGroup()
