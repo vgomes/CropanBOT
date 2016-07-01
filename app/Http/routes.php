@@ -10,13 +10,18 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middleware' => ['web', 'auth']], function () {
-    Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
-    Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
-    Route::get('/stats', ['as' => 'pages.stats', 'uses' => 'Pages@stats']);
-
-    Route::pattern('vote', 'yld|no');
-    Route::get('/v/{image}/{choice}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        $stats = new \Cropan\Stats();
+        
+        $stats->uncommonTaste();
+    });
+//    Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
+//    Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
+//    Route::get('/stats', ['as' => 'pages.stats', 'uses' => 'Pages@stats']);
+//
+//    Route::pattern('vote', 'yld|no');
+//    Route::get('/v/{image}/{choice}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
 });
 
 Route::get('/login/twitter', ['as' => 'login.twitter', 'uses' => 'Pages@TwitterLogin']);
