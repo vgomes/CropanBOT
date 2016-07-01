@@ -40,7 +40,7 @@ class ProcessVotes extends Command
      */
     public function handle()
     {
-        $updates = Update::all();
+        $updates = Update::where('type', 'group')->all();
 
         $updates->each(function (Update $update) {
 

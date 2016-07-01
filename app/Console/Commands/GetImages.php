@@ -60,7 +60,7 @@ class GetImages extends Command
                 }
             }
 
-            //$update->delete();
+            $update->delete();
         });
     }
 }
