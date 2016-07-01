@@ -72,7 +72,7 @@ class Stats extends Model
      * Ranking for the ratio of pictures sent to Tumblr per user
      * @return mixed
      */
-    public function publishedInTumblrRanking()
+    public function tumblrRanking()
     {
         return $this->users->sortByDesc('publishedPercent');
     }
@@ -125,7 +125,11 @@ class Stats extends Model
         $results = Collection::make($results);
         return $results;
     }
-    
+
+    /**
+     * Ranking of users with the count of the times they have been the only one voting no when anyone else has voted yes
+     * @return array|static|static[]
+     */
     public function nitPicker()
     {
         $ids = [];
