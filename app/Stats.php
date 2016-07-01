@@ -125,4 +125,30 @@ class Stats extends Model
         $results = Collection::make($results);
         return $results;
     }
+    
+    public function nitPicker()
+    {
+        $ids = [];
+
+        $pics = \DB::table('pictures')
+            ->where('score', '>=', 0)
+            ->where('no', 1)
+            ->select('id')
+            ->get();
+
+        foreach ($pics as $pic) {
+            $ids[] = intval($pic->id);
+        }
+
+        $results = \DB::table('votes')
+            ->join('users', 'users.telegram_id', '=', 'votes.user_id')
+            ->select('users.nickname', \DB::raw('count(users.id) as times'))
+            ->whereIn('picture_id', $ids)
+            ->groupBy('users.id')
+            ->orderBy('times', 'desc')
+            ->get();
+
+        $results = Collection::make($results);
+        return $results;
+    }
 }
