@@ -37,7 +37,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('telegram:getupdates')->everyMinute();
         $schedule->command('images:get')->everyFiveMinutes();
         $schedule->command('images:votes')->everyTenMinutes();
-        $schedule->command('images:submit')->everyTenMinutes();
+        $schedule->command('images:submit')->everyThirtyMinutes();
         $schedule->command('images:tumblr')->everyThirtyMinutes();
+
+        // Backups
+        $schedule->command('backup:run')->hourly();
+        $schedule->command('backup:monitor')->hourly();
+        $schedule->command('backup:clean')->dailyAt('02:00');
     }
 }

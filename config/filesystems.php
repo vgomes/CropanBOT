@@ -62,6 +62,13 @@ return [
             'bucket' => 'your-bucket',
         ],
 
+
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'accessToken' => env('DROPBOX_TOKEN'),
+            'appSecret' => env('DROPBOX_SECRET'),
+        ]
+
     ],
 
 ];

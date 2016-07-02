@@ -163,8 +163,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
         \Laravel\Socialite\SocialiteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class
-
+        Collective\Html\HtmlServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        \Cropan\Providers\DropboxFilesystemServiceProvider::class
     ],
 
     /*
