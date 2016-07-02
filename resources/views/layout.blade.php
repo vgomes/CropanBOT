@@ -46,13 +46,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">CropanBOT</a>
+            <a class="navbar-brand" href="{{ route('pages.index') }}">CropanBOT</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('pages.index') }}">Home</a></li>
-                <li><a href="{{ route('pages.history') }}">History</a></li>
-                <li><a href="{{ route('pages.stats') }}">Stats</a></li>
+                <li><a href="{{ route('pages.history') }}">Historial</a></li>
+                <li><a href="{{ route('pages.stats') }}">Estadísticas</a></li>
+                <li><a href="{{ route('pages.pending') }}">Pendientes</a></li>
             </ul>
             @if(Auth::check())
             <ul class="nav navbar-nav navbar-right">

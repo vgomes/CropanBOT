@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::pattern('vote', 'yld|no');
     Route::get('/v/{image}/{choice?}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
-    Route::get('/queue', ['as' => 'pages.queue', 'uses' => 'Pages@queue']);
+    Route::get('/pending', ['as' => 'pages.pending', 'uses' => 'Pages@pending']);
 
     Route::post('/vote', ['as' => 'process.votes', 'uses' => 'Pages@votePost']);
 });

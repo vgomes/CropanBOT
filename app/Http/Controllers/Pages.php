@@ -79,8 +79,7 @@ class Pages extends Controller
     }
 
     public function votePost(VoteRequest $request)
-    {
-
+    {   
         $vote = Vote::firstOrCreate([
             'picture_id' => $request->get('picture_id'),
             'user_id' => \Auth::user()->telegram_id
@@ -89,11 +88,30 @@ class Pages extends Controller
         $vote->vote = $request->get('vote');
         $vote->save();
 
-        return \Redirect::route('pages.vote', ['image' => $request->get('picture_id')]);
+//        return \Redirect::route('pages.vote', ['image' => $request->get('picture_id')]);
+        return \Redirect::back();
     }
     
-    public function queue()
-    {}
+    public function pending()
+    {
+        $pic = \DB::select("select * 
+            from pictures p 
+            where p.id not in (
+                select distinct v.picture_id 
+                from votes v 
+                where v.user_id = ?
+            )
+            order by rand()
+            limit 1", [\Auth::user()->telegram_id]);
+
+        $picture = null;
+
+        if (count($pic) > 0) {
+            $picture = Picture::find($pic[0]->id);
+        }
+
+        return view('pages.vote')->with('picture', $picture)->with('vote', null);
+    }
 
     public function TwitterLogin()
     {
