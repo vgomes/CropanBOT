@@ -100,7 +100,7 @@ class Pages extends Controller
                 select distinct v.picture_id 
                 from votes v 
                 where v.user_id = ?
-            )
+            ) and sent_at is not null
             order by rand()
             limit 1", [\Auth::user()->telegram_id]);
 
