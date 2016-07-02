@@ -102,25 +102,11 @@ class Stats extends Model
      */
     public function uncommonTaste()
     {
-        $ids = [];
-
-        $pics = \DB::table('pictures')
-            ->where('score', '<=', 0)
-            ->where('yes', 1)
-            ->select('id')
-            ->get();
-
-        foreach ($pics as $pic) {
-            $ids[] = intval($pic->id);
-        }
-
-        $results = \DB::table('votes')
-            ->join('users', 'users.telegram_id', '=', 'votes.user_id')
-            ->select('users.nickname', \DB::raw('count(users.id) as times'))
-            ->whereIn('picture_id', $ids)
-            ->groupBy('users.id')
-            ->orderBy('times', 'desc')
-            ->get();
+        $results = \DB::select("select u.nickname, count(u.id) as times
+            from (select * from votes where vote = 1 ) v join ( select * from pictures where yes = 1 and score <= 0) p on v.picture_id = p.id
+                join users u on v.user_id = u.telegram_id
+            group by u.id
+            order by times desc");
 
         $results = Collection::make($results);
         return $results;
@@ -132,25 +118,11 @@ class Stats extends Model
      */
     public function nitPicker()
     {
-        $ids = [];
-
-        $pics = \DB::table('pictures')
-            ->where('score', '>=', 0)
-            ->where('no', 1)
-            ->select('id')
-            ->get();
-
-        foreach ($pics as $pic) {
-            $ids[] = intval($pic->id);
-        }
-
-        $results = \DB::table('votes')
-            ->join('users', 'users.telegram_id', '=', 'votes.user_id')
-            ->select('users.nickname', \DB::raw('count(users.id) as times'))
-            ->whereIn('picture_id', $ids)
-            ->groupBy('users.id')
-            ->orderBy('times', 'desc')
-            ->get();
+        $results = \DB::select("select u.nickname, count(u.id) as times
+            from (select * from votes where vote = 0 ) v join ( select * from pictures where no = 1 and score >= 0) p on v.picture_id = p.id
+                join users u on v.user_id = u.telegram_id
+            group by u.id
+            order by times desc");
 
         $results = Collection::make($results);
         return $results;
