@@ -52,7 +52,10 @@ class Pages extends Controller
 
     public function vote(Picture $image, $choice = null)
     {
-        $vote = null;
+        $vote = Vote::firstOrCreate([
+            'picture_id' => $image->id,
+            'user_id' => \Auth::user()->telegram_id
+        ]);
 
         if (!is_null($choice)) {
 
@@ -66,11 +69,6 @@ class Pages extends Controller
                     break;
             }
 
-            Vote::firstOrCreate([
-                'picture_id' => $image->id,
-                'user_id' => \Auth::user()->telegram_id
-            ]);
-
             $vote->vote = $choice;
             $vote->save();
         }
@@ -79,7 +77,7 @@ class Pages extends Controller
     }
 
     public function votePost(VoteRequest $request)
-    {   
+    {
         $vote = Vote::firstOrCreate([
             'picture_id' => $request->get('picture_id'),
             'user_id' => \Auth::user()->telegram_id
@@ -88,8 +86,11 @@ class Pages extends Controller
         $vote->vote = $request->get('vote');
         $vote->save();
 
-//        return \Redirect::route('pages.vote', ['image' => $request->get('picture_id')]);
-        return \Redirect::back();
+        if (stripos(\URL::previous(), '/pending') === false) {
+            return \Redirect::route('pages.vote', ['image' => $request->get('picture_id')]);
+        } else {
+            return \Redirect::back();
+        }
     }
     
     public function pending()
