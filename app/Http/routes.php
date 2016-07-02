@@ -16,7 +16,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stats', ['as' => 'pages.stats', 'uses' => 'Pages@stats']);
 
     Route::pattern('vote', 'yld|no');
-    Route::get('/v/{image}/{choice}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
+    Route::get('/v/{image}/{choice?}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
+    Route::get('/queue', ['as' => 'pages.queue', 'uses' => 'Pages@queue']);
+
+    Route::post('/vote', ['as' => 'process.votes', 'uses' => 'Pages@votePost']);
 });
 
 Route::get('/login/twitter', ['as' => 'login.twitter', 'uses' => 'Pages@TwitterLogin']);

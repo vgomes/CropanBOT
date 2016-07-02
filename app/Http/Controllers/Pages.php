@@ -3,6 +3,7 @@
 namespace Cropan\Http\Controllers;
 
 use Cropan\Http\Requests;
+use Cropan\Http\Requests\VoteRequest;
 use Cropan\Picture;
 use Cropan\Stats;
 use Cropan\User;
@@ -49,28 +50,50 @@ class Pages extends Controller
             ->with('nitpicker', $nitpicker);
     }
 
-    public function vote(Picture $image, $choice)
+    public function vote(Picture $image, $choice = null)
     {
-        switch (strtoupper($choice)) {
-            case 'YLD' :
-                $choice = true;
-                break;
+        $vote = null;
 
-            case 'NO' :
-                $choice = false;
-                break;
+        if (!is_null($choice)) {
+
+            switch (strtoupper($choice)) {
+                case 'YLD' :
+                    $choice = true;
+                    break;
+
+                case 'NO' :
+                    $choice = false;
+                    break;
+            }
+
+            Vote::firstOrCreate([
+                'picture_id' => $image->id,
+                'user_id' => \Auth::user()->telegram_id
+            ]);
+
+            $vote->vote = $choice;
+            $vote->save();
         }
-
-        $vote = Vote::firstOrCreate([
-            'picture_id' => $image->id,
-            'user_id' => \Auth::user()->telegram_id
-        ]);
-
-        $vote->vote = $choice;
-        $vote->save();
 
         return view('pages.vote')->with('picture', $image)->with('vote', $vote);
     }
+
+    public function votePost(VoteRequest $request)
+    {
+
+        $vote = Vote::firstOrCreate([
+            'picture_id' => $request->get('picture_id'),
+            'user_id' => \Auth::user()->telegram_id
+        ]);
+
+        $vote->vote = $request->get('vote');
+        $vote->save();
+
+        return \Redirect::route('pages.vote', ['image' => $request->get('picture_id')]);
+    }
+    
+    public function queue()
+    {}
 
     public function TwitterLogin()
     {
