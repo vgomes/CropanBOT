@@ -13,9 +13,6 @@ services:
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database cropanbot_test;'
-  - export DB_DATABASE='cropanbot_test'
-  - export DB_USERNAME=travis
-  - export DB_PASSWORD=
   - php artisan migrate --seed --force
   - php artisan key:generate
 
