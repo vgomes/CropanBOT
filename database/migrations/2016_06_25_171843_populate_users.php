@@ -22,11 +22,13 @@ class PopulateUsers extends Migration
 
         $users = getAllowedUsers();
 
-        foreach ($users as $user) {
-            \Cropan\User::create([
-                'telegram_id' => $user['telegram_id'],
-                'nickname' => $user['nickname']
-            ]);
+        if (count($users) > 0) {
+            foreach ($users as $user) {
+                \Cropan\User::create([
+                    'telegram_id' => $user['telegram_id'],
+                    'nickname' => $user['nickname']
+                ]);
+            }
         }
     }
 
