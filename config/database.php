@@ -66,17 +66,17 @@ return [
             'engine' => null,
         ],
 
-        'openshift' => array(
+        'testing' => [
             'driver'    => 'mysql',
-            'host'      => getenv('OPENSHIFT_MYSQL_DB_HOST'),
-            'port'      => getenv('OPENSHIFT_MYSQL_DB_PORT'),
-            'database'  => getenv('OPENSHIFT_APP_NAME'),
-            'username'  => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
-            'password'  => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
+            'host'      => env('DB_TEST_HOST', 'localhost'),
+            'database'  => env('DB_TEST_DATABASE', 'cropanbot_test'),
+            'username'  => env('DB_TEST_USERNAME', 'homestead'),
+            'password'  => env('DB_TEST_PASSWORD', 'secret'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
-        ),
+            'strict'    => false,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
