@@ -1,15 +1,21 @@
 <?php
 
 use Cropan\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UrlsWorkingTest extends TestCase
 {
     protected $user;
 
+    use DatabaseMigrations;
+    use DatabaseTransactions;
+
     public function setUp()
     {
         parent::setUp();
 
+        Artisan::call('migrate');
         $this->user = User::where('nickname', 'Himliano')->first();
     }
 
