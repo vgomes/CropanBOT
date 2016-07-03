@@ -1,4 +1,4 @@
 # CropanBOT
 It delivers Cropan.
 
-https://travis-ci.org/vgomes/CropanBOT.svg?branch=develop
+[![Build Status](https://travis-ci.org/vgomes/CropanBOT.svg)](https://travis-ci.org/vgomes/CropanBOT)
