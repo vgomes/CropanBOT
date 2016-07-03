@@ -10,6 +10,10 @@ php:
 services:
   - mysql
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 # Commands to be run before your environment runs.
 before_script:
   - composer self-update
