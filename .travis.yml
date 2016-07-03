@@ -7,6 +7,17 @@ php:
   - 7.0
   - hhvm
 
+services:
+  - mysql
+
+before_script:
+  - mysql -e 'create database cropanbot;'
+  - export DB_DATABASE='cropanbot'
+  - export DB_USERNAME=travis
+  - export DB_PASSWORD=
+  - php artisan migrate --seed --force
+  - php artisan key:generate
+
 # Commands to be run before your environment runs.
 before_script:
   - composer self-update
