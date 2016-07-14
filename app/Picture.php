@@ -67,6 +67,16 @@ class Picture extends Model
 
             return true;
         });
+
+        parent::updated(function (Picture $picture) {
+            if ($picture->score == User::all()->count()) {
+                Diary::experienceFromPerfectImage($picture);
+            }
+
+            if ($picture->score == (User::all()->count() * -1)) {
+                Diary::experienceFromDisgraceImage($picture);
+            }
+        });
     }
 
     // Functions

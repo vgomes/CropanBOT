@@ -28,7 +28,7 @@ class Diary extends Model
 
     public static function experienceFromSubmittingPicture(Picture $picture)
     {
-        $xp = (int) env('EXP_SUBMIT_IMAGE') * (rand(100, 150) / 100);
+        $xp = (int)env('EXP_SUBMIT_IMAGE') * (rand(100, 150) / 100);
 
         $entry = new Diary();
 
@@ -46,11 +46,10 @@ class Diary extends Model
 
     public static function experienceFromImageGettingPublished(Picture $picture)
     {
-        $xp = (int) env('EXP_SEND_GROUP_IMAGE') * (rand(100, 110) / 100);
+        $xp = (int)env('EXP_SEND_GROUP_IMAGE') * (rand(100, 110) / 100);
 
         $entry = new Diary();
 
-        // Exp when image gets to the telegram group
         $entry->xp = $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
@@ -64,11 +63,10 @@ class Diary extends Model
 
     public static function experienceFromImageGoingToTumblr(Picture $picture)
     {
-        $xp = (int) env('EXP_SEND_GROUP_IMAGE') * (rand(100, 120) / 100);
+        $xp = (int)env('EXP_SEND_GROUP_IMAGE') * (rand(100, 120) / 100);
 
         $entry = new Diary();
 
-        // Exp when image reaches tumblr
         $entry->xp = $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
@@ -82,12 +80,10 @@ class Diary extends Model
 
     public static function experienceFromVote(Vote $vote)
     {
-        // experience for the person who votes
-        $xp = (int) env('EXP_PER_VOTE');
+        $xp = (int)env('EXP_PER_VOTE');
 
         $entry = new Diary();
 
-        // Exp when image reaches tumblr
         $entry->xp = $xp;
         $entry->user_id = $vote->user_id;
         $entry->picture_id = $vote->picture_id;
@@ -101,8 +97,7 @@ class Diary extends Model
 
     public static function experienceFromVoteForImageSubmitter(Vote $vote, $isUpdate = false)
     {
-        // experience for the person who submitted the image
-        $xp = ($vote->vote) ? (int) env('EXP_POSITIVE_VOTE') : (int) env('EXP_NEGATIVE_VOTE');
+        $xp = ($vote->vote) ? (int)env('EXP_POSITIVE_VOTE') : (int)env('EXP_NEGATIVE_VOTE');
 
         if ($isUpdate) {
             $xp = $xp * 2;
@@ -110,12 +105,45 @@ class Diary extends Model
 
         $entry = new Diary();
 
-        // Exp when image reaches tumblr
         $entry->xp = $xp;
         $entry->user_id = $vote->picture->user_id;
         $entry->picture_id = $vote->picture_id;
         $entry->concept = "Recibes $entry->xp xp por votos recibidos por tu " . link_to_action('Pages@vote', 'imagen',
                 ['image' => $vote->picture_id]);
+
+        $entry->save();
+
+        Diary::addXp($entry);
+    }
+
+    public static function experienceFromPerfectImage(Picture $picture)
+    {
+        $xp = (int)env('EXP_PERFECT');
+
+        $entry = new Diary();
+
+        $entry->xp = $xp;
+        $entry->user_id = $picture->user_id;
+        $entry->picture_id = $picture->id;
+        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
+                ['image' => $picture->id] . " ha conseguido hacer pleno de positivos");
+
+        $entry->save();
+
+        Diary::addXp($entry);
+    }
+
+    public static function experienceFromDisgraceImage(Picture $picture)
+    {
+        $xp = (int)env('EXP_DISGRACE');
+
+        $entry = new Diary();
+
+        $entry->xp = $xp;
+        $entry->user_id = $picture->user_id;
+        $entry->picture_id = $picture->id;
+        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
+                ['image' => $picture->id] . " ha conseguido hacer pleno de positivos");
 
         $entry->save();
 
