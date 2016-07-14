@@ -40,7 +40,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                    class="navbar-toggle collapsed" type="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -55,15 +56,28 @@
                 <li><a href="{{ route('pages.pending') }}">Pendientes</a></li>
             </ul>
             @if(Auth::check())
-            <ul class="nav navbar-nav navbar-right">
-                <li><img class="img-circle" src="{{ Auth::user()->avatar }}" /></li>
-                <li><li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">{{ Auth::user()->nickname }} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('logout') }}">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><img class="img-circle" src="{{ Auth::user()->avatar }}"/></li>
+                    <li>
+                    <li class="dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"
+                           class="dropdown-toggle" href="#">{{ Auth::user()->nickname }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Lvl {{ Auth::user()->level }} | XP: {{ Auth::user()->current_exp }} /
+                                    1000</a></li>
+                            <li>
+                                <div class="progress" style="margin: auto 20px">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{{ Auth::user()->current_exp }}"
+                                         aria-valuemin="0" aria-valuemax="1000" style="width: {{ (Auth::user()->current_exp / 1000) * 100 }}%">
+                                        <span class="sr-only">40% Complete (success)</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             @endif
         </div><!--/.nav-collapse -->
     </div>
