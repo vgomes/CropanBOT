@@ -77,20 +77,18 @@ class Diary extends Model
 
     public static function experienceFromVote(Vote $vote)
     {
-        if ($vote->user_id != \Auth::user()->telegram_id) {
-            $xp = (int)env('EXP_PER_VOTE');
+        $xp = (int)env('EXP_PER_VOTE');
 
-            $entry = new Diary();
+        $entry = new Diary();
 
-            $entry->xp = $xp;
-            $entry->user_id = $vote->user_id;
-            $entry->picture_id = $vote->picture_id;
-            $entry->concept = "Recibes $entry->xp xp por haber votado una imagen";
+        $entry->xp = $xp;
+        $entry->user_id = $vote->user_id;
+        $entry->picture_id = $vote->picture_id;
+        $entry->concept = "Recibes $entry->xp xp por haber votado una imagen";
 
-            $entry->save();
+        $entry->save();
 
-            Diary::addXp($entry);
-        }
+        Diary::addXp($entry);
     }
 
     public static function experienceFromVoteForImageSubmitter(Vote $vote, $isUpdate = false)
