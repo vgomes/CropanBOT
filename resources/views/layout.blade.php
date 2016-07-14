@@ -63,7 +63,7 @@
                         <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"
                            class="dropdown-toggle" href="#">{{ Auth::user()->nickname }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Lvl {{ Auth::user()->level }} | XP: {{ Auth::user()->current_exp }} /
+                            <li><a href="{{ route('pages.explog') }}">Lvl {{ Auth::user()->level }} | XP: {{ Auth::user()->current_exp }} /
                                     1000</a></li>
                             <li>
                                 <div class="progress" style="margin: auto 20px">

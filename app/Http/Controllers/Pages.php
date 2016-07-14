@@ -2,6 +2,7 @@
 
 namespace Cropan\Http\Controllers;
 
+use Cropan\Diary;
 use Cropan\Http\Requests;
 use Cropan\Http\Requests\VoteRequest;
 use Cropan\Picture;
@@ -112,6 +113,17 @@ class Pages extends Controller
         }
 
         return view('pages.vote')->with('picture', $picture)->with('vote', null);
+    }
+
+    public function explog()
+    {
+        $logs = Diary::where('user_id', \Auth::user()->telegram_id)->orderBy('created_at', 'desc')->paginate(20);
+
+        $logs->each(function (Diary $diary) {
+            $diary->img_url = Picture::find($diary->picture_id)->url;
+        });
+
+        return view('pages.explog')->with('logs', $logs);
     }
 
     public function TwitterLogin()

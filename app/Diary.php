@@ -36,8 +36,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
-        $entry->concept = "Recibes $entry->xp xp por enviar una " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $picture->id]) . " a CropanBot";
+        $entry->concept = "Recibes $entry->xp xp por enviar una imagen a CropanBot";
 
         $entry->save();
 
@@ -53,8 +52,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
-        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $picture->id]) . " ha llegado al grupo de Telegram";
+        $entry->concept = "Recibes $entry->xp xp porque tu imagen ha llegado al grupo de Telegram";
 
         $entry->save();
 
@@ -70,8 +68,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
-        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $picture->id]) . " ha sido enviada a la cola de Tumblr";
+        $entry->concept = "Recibes $entry->xp xp porque tu imagen ha sido enviada a la cola de Tumblr";
 
         $entry->save();
 
@@ -80,19 +77,20 @@ class Diary extends Model
 
     public static function experienceFromVote(Vote $vote)
     {
-        $xp = (int)env('EXP_PER_VOTE');
+        if ($vote->user_id != \Auth::user()->telegram_id) {
+            $xp = (int)env('EXP_PER_VOTE');
 
-        $entry = new Diary();
+            $entry = new Diary();
 
-        $entry->xp = $xp;
-        $entry->user_id = $vote->user_id;
-        $entry->picture_id = $vote->picture_id;
-        $entry->concept = "Recibes $entry->xp xp por haber votado una " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $vote->picture_id]);
+            $entry->xp = $xp;
+            $entry->user_id = $vote->user_id;
+            $entry->picture_id = $vote->picture_id;
+            $entry->concept = "Recibes $entry->xp xp por haber votado una imagen";
 
-        $entry->save();
+            $entry->save();
 
-        Diary::addXp($entry);
+            Diary::addXp($entry);
+        }
     }
 
     public static function experienceFromVoteForImageSubmitter(Vote $vote, $isUpdate = false)
@@ -108,8 +106,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $vote->picture->user_id;
         $entry->picture_id = $vote->picture_id;
-        $entry->concept = "Recibes $entry->xp xp por votos recibidos por tu " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $vote->picture_id]);
+        $entry->concept = "Recibes $entry->xp xp por votos recibidos por tu imagen";
 
         $entry->save();
 
@@ -125,8 +122,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $picture->user_id;
         $entry->picture_id = $picture->id;
-        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $picture->id] . " ha conseguido hacer pleno de positivos");
+        $entry->concept = "Recibes $entry->xp xp porque tu imagen ha conseguido hacer pleno de positivos";
 
         $entry->save();
 
@@ -142,8 +138,7 @@ class Diary extends Model
         $entry->xp = $xp;
         $entry->user_id = $picture->user_id;
         $entry->picture_id = $picture->id;
-        $entry->concept = "Recibes $entry->xp xp porque tu " . link_to_action('Pages@vote', 'imagen',
-                ['image' => $picture->id] . " ha conseguido hacer pleno de positivos");
+        $entry->concept = "Recibes $entry->xp xp porque tu imagen ha conseguido hacer pleno de negativos";
 
         $entry->save();
 
