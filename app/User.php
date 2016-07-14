@@ -7,22 +7,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $primaryKey = 'telegram_id';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'nickname',
         'telegram_id',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = ['remember_token'];
+
+    protected $appends = ['level', 'current_exp'];
 
     // relationships
     public function votes()
@@ -33,5 +26,15 @@ class User extends Authenticatable
     public function pictures()
     {
         return $this->hasMany(Picture::class);
+    }
+
+    public function getLevelAttribute()
+    {
+        return (int) ($this->exp / 1000);
+    }
+
+    public function getCurrentExpAttribute()
+    {
+        return (int) ($this->exp % 1000);
     }
 }
