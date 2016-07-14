@@ -57,6 +57,11 @@ class Picture extends Model
             return true;
         });
 
+        // Exp for submitting images
+        parent::created(function (Picture $picture) {
+            Diary::experienceFromSubmittingPicture($picture);
+        });
+
         parent::saving(function (Picture $picture) {
             $picture->score = ($picture->yes - $picture->no);
 
@@ -83,6 +88,8 @@ class Picture extends Model
         } catch (RequestException $e) {
             \Log::alert("Problem uploading: " . $this->url);
         }
+
+        Diary::experienceFromImageGoingToTumblr($this);
     }
 
     public function sendToGroup()
@@ -104,5 +111,7 @@ class Picture extends Model
             'text' => $this->url,
             'reply_markup' => json_encode($keyboard)
         ]);
+
+        Diary::experienceFromImageGettingPublished($this);
     }
 }

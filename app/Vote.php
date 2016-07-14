@@ -36,5 +36,14 @@ class Vote extends Model
             
             $vote->picture->save();
         });
+
+        parent::updated(function (Vote $vote) {
+            Diary::experienceFromVoteForImageSubmitter($vote, true);
+        });
+
+        parent::created(function (Vote $vote) {
+            Diary::experienceFromVote($vote);
+            Diary::experienceFromVoteForImageSubmitter($vote);
+        });
     }
 }
