@@ -61,7 +61,7 @@ class Diary extends Model
 
     public static function experienceFromImageGoingToTumblr(Picture $picture)
     {
-        $xp = (int)env('EXP_SEND_GROUP_IMAGE') * (rand(100, 120) / 100);
+        $xp = (int)env('EXP_SEND_TUMBLR_IMAGE') * (rand(100, 120) / 100);
 
         $entry = new Diary();
 
