@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\QueryException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use \Telegram\Bot\Objects\Update as UpdateObject;
 
 class Update extends Model
@@ -20,12 +21,16 @@ class Update extends Model
      */
     public function import(UpdateObject $update)
     {
-        $updateId = $update->getMessage()->getMessageId();
-        $userId = $update->getMessage()->getFrom()->getId();
-        $type = $update->getMessage()->getChat()->getType();
+        $message = $update->getMessage();
+        if (is_null($message)) {
+            $message = $update->getEditedMessage();
+        }
+        $updateId = $message->getMessageId();
+        $userId = $message->getFrom()->getId();
+        $type = $message->getChat()->getType();
 
-        if (!is_null($update->getMessage()->getReplyToMessage())) {
-            $reply_to = $update->getMessage()->getReplyToMessage()->getText();
+        if (!is_null($message->getReplyToMessage())) {
+            $reply_to = $message->getReplyToMessage()->getText();
             // check if it contains a picture url
             preg_match('/http(?:s)?:\/\/[0-9a-zA-Z;.\/\-?:@=_#&%~,+$]+/', $reply_to, $matches);
 
@@ -38,9 +43,9 @@ class Update extends Model
         } else {
             $reply_to = null;
         }
-        $text = $update->getMessage()->getText();
+        $text = $message->getText();
         $content = $update;
-        $date = $update->getMessage()->getDate();
+        $date = $message->getDate();
 
         try {
             $this->create([
