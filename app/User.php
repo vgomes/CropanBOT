@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function getLevelAttribute()
     {
-        return (int) ($this->exp / 1000);
+        return (int) ($this->exp / 1000) + 1;
     }
 
     public function getCurrentExpAttribute()
