@@ -82,24 +82,26 @@ class Picture extends Model
     // Functions
     public function uploadToTumblr()
     {
-        try {
-            // publish to Tumblr
-            $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
-            $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
-            $client->createPost(env('TUMBLR_BLOG'), [
-                'type' => 'photo',
-                'state' => 'queue',
-                'tags' => env('TUMBLR_TAGS'),
-                'source' => $this->url
-            ]);
+        if (\App::environment('production')) {
+            try {
+                // publish to Tumblr
+                $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
+                $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
+                $client->createPost(env('TUMBLR_BLOG'), [
+                    'type' => 'photo',
+                    'state' => 'queue',
+                    'tags' => env('TUMBLR_TAGS'),
+                    'source' => $this->url
+                ]);
 
-            $this->published_at = Carbon::now();
-            $this->save();
-        } catch (RequestException $e) {
-            \Log::alert("Problem uploading: " . $this->url);
+                $this->published_at = Carbon::now();
+                $this->save();
+            } catch (RequestException $e) {
+                \Log::alert("Problem uploading: " . $this->url);
+            }
+
+            Diary::experienceFromImageGoingToTumblr($this);
         }
-
-        Diary::experienceFromImageGoingToTumblr($this);
     }
 
     public function sendToGroup()
