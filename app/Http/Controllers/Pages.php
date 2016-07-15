@@ -30,7 +30,7 @@ class Pages extends Controller
     public function stats()
     {
         $stats = new Stats();
-        
+
         $positiveRanking = $stats->positiveRanking();
         $negativeRanking = $stats->negativeRanking();
 
@@ -69,6 +69,12 @@ class Pages extends Controller
                     break;
             }
 
+            if (is_null($vote)) {
+                $vote = new Vote();
+                $vote->picture_id = $image->id;
+                $vote->user_id = \Auth::user()->telegram_id;
+            }
+
             $vote->vote = $choice;
             $vote->save();
         }
@@ -92,7 +98,7 @@ class Pages extends Controller
             return \Redirect::back();
         }
     }
-    
+
     public function pending()
     {
         $pic = \DB::select("select * 
