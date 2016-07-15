@@ -95,11 +95,11 @@ class Picture extends Model
 
             $this->published_at = Carbon::now();
             $this->save();
+
+            Diary::experienceFromImageGoingToTumblr($this);
         } catch (RequestException $e) {
             \Log::alert("Problem uploading: " . $this->url);
         }
-
-        Diary::experienceFromImageGoingToTumblr($this);
     }
 
     public function sendToGroup()
