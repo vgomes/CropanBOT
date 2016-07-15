@@ -53,10 +53,9 @@ class Pages extends Controller
 
     public function vote(Picture $image, $choice = null)
     {
-        $vote = Vote::firstOrCreate([
-            'picture_id' => $image->id,
-            'user_id' => \Auth::user()->telegram_id
-        ]);
+        $vote = Vote::where('picture_id', $image->id)
+            ->where('user_id', \Auth::user()->telegram_id)
+            ->first();
 
         if (!is_null($choice)) {
 
@@ -79,7 +78,7 @@ class Pages extends Controller
 
     public function votePost(VoteRequest $request)
     {
-        $vote = Vote::firstOrCreate([
+        $vote = Vote::firstOrNew([
             'picture_id' => $request->get('picture_id'),
             'user_id' => \Auth::user()->telegram_id
         ]);

@@ -28,12 +28,12 @@ class Diary extends Model
 
     public static function experienceFromSubmittingPicture(Picture $picture)
     {
-        $xp = (int)env('EXP_SUBMIT_IMAGE') * (rand(100, 150) / 100);
+        $xp = env('EXP_SUBMIT_IMAGE') * (rand(100, 150) / 100);
 
         $entry = new Diary();
 
         // Exp when sending image to telegram bot
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp por enviar una imagen a CropanBot";
@@ -45,11 +45,11 @@ class Diary extends Model
 
     public static function experienceFromImageGettingPublished(Picture $picture)
     {
-        $xp = (int)env('EXP_SEND_GROUP_IMAGE') * (rand(100, 110) / 100);
+        $xp = env('EXP_SEND_GROUP_IMAGE') * (rand(100, 110) / 100);
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha llegado al grupo de Telegram";
@@ -61,11 +61,11 @@ class Diary extends Model
 
     public static function experienceFromImageGoingToTumblr(Picture $picture)
     {
-        $xp = (int)env('EXP_SEND_TUMBLR_IMAGE') * (rand(100, 120) / 100);
+        $xp = env('EXP_SEND_TUMBLR_IMAGE') * (rand(100, 120) / 100);
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $picture->user->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha sido enviada a la cola de Tumblr";
@@ -77,11 +77,11 @@ class Diary extends Model
 
     public static function experienceFromVote(Vote $vote)
     {
-        $xp = (int)env('EXP_PER_VOTE');
+        $xp = env('EXP_PER_VOTE');
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $vote->user_id;
         $entry->picture_id = $vote->picture_id;
         $entry->concept = "Recibes $entry->xp xp por haber votado una imagen";
@@ -93,7 +93,7 @@ class Diary extends Model
 
     public static function experienceFromVoteForImageSubmitter(Vote $vote, $isUpdate = false)
     {
-        $xp = ($vote->vote) ? (int)env('EXP_POSITIVE_VOTE') : (int)env('EXP_NEGATIVE_VOTE');
+        $xp = ($vote->vote) ? env('EXP_POSITIVE_VOTE') : env('EXP_NEGATIVE_VOTE');
 
         if ($isUpdate) {
             $xp = $xp * 2;
@@ -101,7 +101,7 @@ class Diary extends Model
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $vote->picture->user_id;
         $entry->picture_id = $vote->picture_id;
         $entry->concept = "Recibes $entry->xp xp por votos recibidos por tu imagen";
@@ -113,11 +113,11 @@ class Diary extends Model
 
     public static function experienceFromPerfectImage(Picture $picture)
     {
-        $xp = (int)env('EXP_PERFECT');
+        $xp = env('EXP_PERFECT');
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $picture->user_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha conseguido hacer pleno de positivos";
@@ -129,11 +129,11 @@ class Diary extends Model
 
     public static function experienceFromDisgraceImage(Picture $picture)
     {
-        $xp = (int)env('EXP_DISGRACE');
+        $xp = env('EXP_DISGRACE');
 
         $entry = new Diary();
 
-        $entry->xp = $xp;
+        $entry->xp = (int) $xp;
         $entry->user_id = $picture->user_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha conseguido hacer pleno de negativos";
