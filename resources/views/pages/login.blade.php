@@ -13,7 +13,7 @@
 @push('styles')
 <style>
     body {
-        background: url('http://17rg073sukbm1lmjk9jrehb643.wpengine.netdna-cdn.com/wp-content/uploads/2014/01/gentlemen.jpg') no-repeat center center fixed;
+        background: url('images/gentlemen.jpg') no-repeat center center fixed;
         background-size: cover;
     }
 

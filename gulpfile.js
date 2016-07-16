@@ -25,7 +25,8 @@ elixir(function(mix) {
         'vendor/jquery/dist/jquery.min.js',
         'vendor/tether/dist/js/tether.js',
         'vendor/bootstrap/dist/js/bootstrap.js',
-        'vendor/lity/dist/lity.js',
-        'js/lazysizes.js'
+        'vendor/lity/dist/lity.js'
     ], 'public/js/script.js', 'resources/assets');
+
+    mix.copy('resources/assets/images', 'public/images')
 });
