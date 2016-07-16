@@ -15,11 +15,15 @@ elixir(function(mix) {
     mix.phpUnit();
 
     mix.styles([
-        'vendor/bootstrap/dist/css/bootstrap.css'
+        'vendor/bootstrap/dist/css/bootstrap.css',
+        'css/lity.css',
+        'vendor/tether/dist/css/tether.css'
     ], 'public/css/style.css', 'resources/assets');
 
     mix.scripts([
         'vendor/jquery/dist/jquery.min.js',
-        'vendor/bootstrap/dist/js/bootstrap.js'
+        'vendor/tether/dist/js/tether.js',
+        'vendor/bootstrap/dist/js/bootstrap.js',
+        'js/lity.js'
     ], 'public/js/script.js', 'resources/assets');
 });

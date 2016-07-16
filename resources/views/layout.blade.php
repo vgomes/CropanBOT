@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Sticky Footer Navbar Template for Bootstrap</title>
+    <title>Cropan Gourmet</title>
 
     <link rel="stylesheet" href="/css/style.css">
     <style>
@@ -106,6 +106,6 @@
     </div>
 </footer>
 
-<script src="/js/style.js"></script>
+<script src="/js/script.js"></script>
 </body>
 </html>
