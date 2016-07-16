@@ -16,7 +16,7 @@ elixir(function(mix) {
 
     mix.styles([
         'vendor/bootstrap/dist/css/bootstrap.css',
-        'css/lity.css',
+        'vendor/lity/dist/lity.css',
         'vendor/tether/dist/css/tether.css'
     ], 'public/css/style.css', 'resources/assets');
 
@@ -24,6 +24,7 @@ elixir(function(mix) {
         'vendor/jquery/dist/jquery.min.js',
         'vendor/tether/dist/js/tether.js',
         'vendor/bootstrap/dist/js/bootstrap.js',
-        'js/lity.js'
+        'vendor/lity/dist/lity.js',
+        'js/lazysizes.js'
     ], 'public/js/script.js', 'resources/assets');
 });
