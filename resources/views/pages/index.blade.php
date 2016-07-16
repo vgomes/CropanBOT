@@ -25,7 +25,7 @@
         </div>
     @endforeach
 
-    <nav>
+    <nav class="center-block">
         {!! $pictures->links() !!}
     </nav>
     <div id="inline" style="background:#fff" class="lity-hide">
