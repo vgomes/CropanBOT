@@ -12,6 +12,7 @@
     <title>Cropan Gourmet</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    @stack('styles')
 </head>
 
 <body>

@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <a href="{{ $item->url }}" data-lity>
-                        <img src="{{ $item->url }}" alt="Card image" class="img-fluid center-cropped lazyload">
+                        <img src="{{ $item->url }}" alt="Imagen" class="img-fluid center-cropped lazyload">
                     </a>
                     <div class="card-block">
                         <h5>
