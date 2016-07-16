@@ -5,6 +5,7 @@ Route::get('/test', function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
     Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
+    Route::get('/score/{order?}', ['as' => 'pages.score', 'uses' => 'Pages@score']);
     Route::get('/stats', ['as' => 'pages.stats', 'uses' => 'Pages@stats']);
 
     Route::pattern('vote', 'yld|no');

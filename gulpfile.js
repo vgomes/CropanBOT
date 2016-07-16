@@ -17,7 +17,8 @@ elixir(function(mix) {
     mix.styles([
         'vendor/bootstrap/dist/css/bootstrap.css',
         'vendor/lity/dist/lity.css',
-        'vendor/tether/dist/css/tether.css'
+        'vendor/tether/dist/css/tether.css',
+        'css/cropan.css'
     ], 'public/css/style.css', 'resources/assets');
 
     mix.scripts([

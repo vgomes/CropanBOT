@@ -13,18 +13,40 @@ use League\OAuth1\Client\Credentials\CredentialsException;
 
 class Pages extends Controller
 {
+    protected $perPage = 16;
+
     public function index()
     {
-        $pictures = Picture::published()->orderBy('published_at', 'desc')->orderBy('id', 'desc')->paginate(9);
+        $pictures = Picture::published()->orderBy('published_at', 'desc')->orderBy('id', 'desc')->paginate($this->perPage);
 
-        return view('pages.index')->with('pictures', $pictures);
+        return view('pages.index')->with('pictures', $pictures)->with('title', "Últimas enviadas a Tumblr");
     }
 
     public function history()
     {
-        $pictures = Picture::sent()->orderBy('sent_at', 'desc')->paginate(15);
+        $pictures = Picture::sent()->orderBy('sent_at', 'desc')->paginate($this->perPage);
 
-        return view('pages.history')->with('pictures', $pictures);
+        return view('pages.history')->with('pictures', $pictures)->with('title', "Historial");
+    }
+
+    public function score($order = 'natural')
+    {
+        $pictures = null;
+
+        switch ($order) {
+            case 'natural' :
+                $pictures = Picture::sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->paginate($this->perPage);
+                $title = "Mejor puntuadas";
+                break;
+
+            case 'reverse' :
+                $pictures = Picture::sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->paginate($this->perPage);
+                $title = "Peor puntuadas";
+                break;
+        }
+
+
+        return view('pages.index')->with('pictures', $pictures)->with('title', $title);
     }
 
     public function stats()

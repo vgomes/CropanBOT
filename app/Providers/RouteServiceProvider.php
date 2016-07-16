@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
+        $router->pattern('order', 'natural|reverse');
 
         parent::boot($router);
     }
