@@ -43,29 +43,8 @@ class Stats extends Model
                 $user->publishedPercent = 0;
             }
         });
-    }
 
-    /**
-     * Creates a ranking of pictures with the best score
-     * @return mixed
-     */
-    public function positiveRanking()
-    {
-        $this->positiveRanking = Picture::has('votes')->sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->take(12)->get();
-
-        return $this->positiveRanking;
-    }
-
-
-    /**
-     * Creates a ranking with the pictures with the best score
-     * @return mixed
-     */
-    public function negativeRanking()
-    {
-        $this->negativeRanking = Picture::has('votes')->sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->take(12)->get();
-
-        return $this->negativeRanking;
+        parent::__construct();
     }
 
     /**

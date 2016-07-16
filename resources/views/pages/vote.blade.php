@@ -9,7 +9,7 @@
     @else
         <div class="container-fluid">
             <div class="col-md-6">
-                <img src="{{ $picture->url }}" class="img-responsive img-thumbnail" alt="">
+                <img src="{{ $picture->url }}" class="img-responsive img-thumbnail" data-lity alt="">
             </div>
             <div class="col-md-6">
                 @if(! is_null($vote))

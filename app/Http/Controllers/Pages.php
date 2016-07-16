@@ -52,9 +52,6 @@ class Pages extends Controller
     public function stats()
     {
         $stats = new Stats();
-        
-        $positiveRanking = $stats->positiveRanking();
-        $negativeRanking = $stats->negativeRanking();
 
         $ratioTumblr = $stats->tumblrRanking();
         $ratioYLD = $stats->yesRatio();
@@ -64,8 +61,6 @@ class Pages extends Controller
         $nitpicker = $stats->nitPicker();
 
         return view('pages.stats')
-            ->with('positiveRanking', $positiveRanking)
-            ->with('negativeRanking', $negativeRanking)
             ->with('ratioTumblr', $ratioTumblr)
             ->with('ratioYLD', $ratioYLD)
             ->with('ratioNO', $ratioNO)
