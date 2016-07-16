@@ -13,7 +13,7 @@
                             @elseif($item->score == 0)
                                 <span class="label label-info">0</span>
                             @else
-                                <span class="label label-info">-{{ $item->score }}</span>
+                                <span class="label label-info">{{ $item->score }}</span>
                             @endif
                         </h5>
                         <h5 class="pull-xs-right">
