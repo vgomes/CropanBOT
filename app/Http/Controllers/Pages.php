@@ -32,15 +32,28 @@ class Pages extends Controller
     public function score($order = 'natural')
     {
         $pictures = null;
+        $title = null;
 
         switch ($order) {
             case 'natural' :
-                $pictures = Picture::sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('no', 'asc')->paginate($this->perPage);
+                $pictures = Picture::sent()
+                    ->orderBy('score', 'desc')
+                    ->orderBy('yes', 'desc')
+                    ->orderBy('no', 'asc')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate($this->perPage);
+
                 $title = "Mejor puntuadas";
                 break;
 
             case 'reverse' :
-                $pictures = Picture::sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('yes', 'asc')->paginate($this->perPage);
+                $pictures = Picture::sent()
+                    ->orderBy('score', 'asc')
+                    ->orderBy('no', 'desc')
+                    ->orderBy('yes', 'asc')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate($this->perPage);
+
                 $title = "Peor puntuadas";
                 break;
         }

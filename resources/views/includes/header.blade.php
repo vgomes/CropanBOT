@@ -43,13 +43,10 @@
                                         class="label label-info">Lvl {{ Auth::user()->level }}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item"
-                                   href="{{ route('pages.explog') }}">XP: {{ Auth::user()->current_exp }} / 1000</a>
-                                <a class="dropdown-item" href="#">
-                                    <progress class="progress progress-striped progress-success"
-                                              value="{{ Auth::user()->current_exp }}" max="1000">25%
-                                    </progress>
-                                </a>
+                                <a class="dropdown-item" href="{{ route('pages.explog') }}">XP: {{ Auth::user()->current_exp }} / 1000</a>
+                                <progress class="progress progress-striped progress-success dropdown-item"
+                                          value="{{ Auth::user()->current_exp }}" max="1000">25%
+                                </progress>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
 
@@ -60,31 +57,6 @@
                         </li>
                     @endif
                 </ul>
-
-                {{--@if(Auth::check())--}}
-                {{--<ul class="nav navbar-nav navbar-right">--}}
-                {{--<li><img class="img-circle" src="{{ Auth::user()->avatar }}"/></li>--}}
-                {{--<li class="dropdown">--}}
-                {{--<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown"--}}
-                {{--class="dropdown-toggle" href="#">{{ Auth::user()->nickname }} <span class="caret"></span></a>--}}
-                {{--<ul class="dropdown-menu">--}}
-                {{--<li><a href="{{ route('pages.explog') }}">Lvl {{ Auth::user()->level }} | XP: {{ Auth::user()->current_exp }} /--}}
-                {{--1000</a></li>--}}
-                {{--<li>--}}
-                {{--<div class="progress" style="margin: auto 20px">--}}
-                {{--<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{{ Auth::user()->current_exp }}"--}}
-                {{--aria-valuemin="0" aria-valuemax="1000" style="width: {{ (Auth::user()->current_exp / 1000) * 100 }}%">--}}
-                {{--<span class="sr-only">40% Complete (success)</span>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--</li>--}}
-                {{--<li role="separator" class="divider"></li>--}}
-                {{--<li><a href="{{ route('logout') }}">Logout</a></li>--}}
-                {{--</ul>--}}
-                {{--</li>--}}
-                {{--</ul>--}}
-                {{--@endif--}}
-
             </div>
         </div>
     </nav>

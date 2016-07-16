@@ -22,9 +22,13 @@
     </div>
 @endforeach
 
-<nav class="center-block">
-    {!! $pictures->links() !!}
-</nav>
+<div class="text-xs-center">
+    <nav>
+        {!! $pictures->links() !!}
+    </nav>
+</div>
+
+
 <div id="inline" style="background:#fff" class="lity-hide">
     Inline content
 </div>
