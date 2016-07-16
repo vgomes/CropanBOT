@@ -13,4 +13,13 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.phpUnit();
+
+    mix.styles([
+        'vendor/bootstrap/dist/css/bootstrap.css'
+    ], 'public/css/style.css', 'resources/assets');
+
+    mix.scripts([
+        'vendor/jquery/dist/jquery.min.js',
+        'vendor/bootstrap/dist/js/bootstrap.js'
+    ], 'public/js/script.js', 'resources/assets');
 });
