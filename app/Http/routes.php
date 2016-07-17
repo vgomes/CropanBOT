@@ -8,7 +8,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/score/{order?}', ['as' => 'pages.score', 'uses' => 'Pages@score']);
     Route::get('/stats', ['as' => 'pages.stats', 'uses' => 'Pages@stats']);
 
-    Route::pattern('vote', 'yld|no');
     Route::get('/v/{image}/{choice?}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
     Route::get('/pending', ['as' => 'pages.pending', 'uses' => 'Pages@pending']);
 

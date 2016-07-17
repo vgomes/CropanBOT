@@ -3,7 +3,6 @@
 namespace Cropan\Http\Controllers;
 
 use Cropan\Diary;
-use Cropan\Http\Requests;
 use Cropan\Http\Requests\VoteRequest;
 use Cropan\Picture;
 use Cropan\Stats;
@@ -99,6 +98,12 @@ class Pages extends Controller
                     break;
             }
 
+            if (is_null($vote)) {
+                $vote = new Vote();
+                $vote->picture_id = $image->id;
+                $vote->user_id = \Auth::user()->telegram_id;
+            }
+
             $vote->vote = $choice;
             $vote->save();
         }
@@ -122,7 +127,7 @@ class Pages extends Controller
             return \Redirect::back();
         }
     }
-    
+
     public function pending()
     {
         $pic = \DB::select("select * 
