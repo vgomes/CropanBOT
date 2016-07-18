@@ -6457,4 +6457,8 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+.graph {
+    height: 250px;
+}
 /*# sourceMappingURL=style.css.map */

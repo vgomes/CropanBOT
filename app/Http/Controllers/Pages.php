@@ -61,6 +61,18 @@ class Pages extends Controller
         return view('pages.index')->with('pictures', $pictures)->with('title', $title);
     }
 
+    public function statsGlobal()
+    {
+        $stats = new Stats();
+
+        $globalImagesBarGraph = $stats->globalImagesBarGraph();
+        $globalImagesYesNoDonut = $stats->globalImagesYesNoDonut();
+
+        return view('pages.stats.global')
+            ->with('globalImagesBarGraph', $globalImagesBarGraph)
+            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut);
+    }
+
     public function stats()
     {
         $stats = new Stats();

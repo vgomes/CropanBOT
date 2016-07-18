@@ -35,6 +35,16 @@ class Picture extends Model
         return $query->whereNotNull('published_at');
     }
 
+    public function scopeYes($query)
+    {
+        return $query->where('score', '>', 0)->where('yes', '>', 1);
+    }
+
+    public function scopeNo($query)
+    {
+        return $query->where('score', '<', 0)->where('no', '>', 0);
+    }
+
     // Relationships
     public function votes()
     {

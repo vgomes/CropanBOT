@@ -2,6 +2,7 @@
 
 namespace Cropan;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,43 +10,55 @@ class Stats extends Model
 {
     protected $users, $positiveRanking, $negativeRanking;
 
-    /**
-     * Stats constructor.
-     * Gets the users and does some math
-     */
-    public function __construct()
+    public function globalImagesBarGraph()
     {
-        $this->users = User::has('votes')->get();
+        $sent = Picture::sent()->count();
+        $queue = Picture::queue()->count();
+        $tumblr = Picture::published()->count();
 
-        $this->users->each(function (User $user) {
-            $yes = 0;
-            $no = 0;
+        $collection = new Collection();
 
-            $user->votes()->each(function (Vote $vote) use (&$yes, &$no) {
-                if ($vote->vote) {
-                    $yes += 1;
-                } else {
-                    $no += 1;
-                }
-            });
+        $collection->add([
+            'title' => 'Enviadas',
+            'value' => $sent
+        ]);
 
-            $user->yes = $yes;
-            $user->no = $no;
-            $user->yesPercent = $yes / ($yes + $no);
-            $user->noPercent = $no / ($yes + $no);
+        $collection->add([
+            'title' => 'En cola',
+            'value' => $queue
+        ]);
+        $collection->add([
+            'title' => 'Publicadas en Tumblr',
+            'value' => $tumblr
+        ]);
 
-            $user->sent = $user->pictures()->count();
-            $user->published = Picture::where('user_id', $user->telegram_id)->published()->count();
-
-            if ($user->sent > 0) {
-                $user->publishedPercent = $user->published / $user->sent;
-            } else {
-                $user->publishedPercent = 0;
-            }
-        });
-
-        parent::__construct();
+        return $collection->toJson();
     }
+
+    /**
+     * Data for a donut chart on number of approved/rejected images
+     * @return string
+     */
+    public function globalImagesYesNoDonut()
+    {
+        $yes_images = Picture::yes()->count();
+        $no_images = Picture::no()->count();
+
+        $collection = new Collection();
+
+        $collection->add([
+            'label' => 'Sí',
+            'value' => $yes_images
+        ]);
+
+        $collection->add([
+            'label' => 'No',
+            'value' => $no_images
+        ]);
+
+        return $collection->toJson();
+    }
+
 
     /**
      * Ranking for the ratio of pictures sent to Tumblr per user

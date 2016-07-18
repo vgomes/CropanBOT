@@ -33,8 +33,8 @@
                         <li class="nav-item btn-group">
                             <a class="dropdown-toggle nav-link" type="link" data-toggle="dropdown">Estadísticas</a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Globales</a>
-                                <a href="#" class="dropdown-item">Usuarios</a>
+                                <a href="{{ route("pages.stats.global") }}" class="dropdown-item">Globales</a>
+                                <a href="{{ route("pages.stats.users") }}" class="dropdown-item">Usuarios</a>
                             </div>
                         </li>
                         <li class="nav-item">

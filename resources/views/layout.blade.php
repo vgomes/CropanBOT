@@ -27,5 +27,7 @@
 @include('includes.footer')
 
 <script src="/js/script.js"></script>
+@stack('scripts')
+@stack('jscode')
 </body>
 </html>
