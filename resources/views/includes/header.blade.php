@@ -14,28 +14,28 @@
             </button>
             <div class="collapse navbar-toggleable-xs" id="navbar">
                 <a class="navbar-brand" href="{{ route('pages.index') }}">Cropan Gourmet</a>
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.history') }}">Historial</a>
-                    </li>
-                    <li class="nav-item btn-group">
-                        <a class="dropdown-toggle nav-link" type="link" id="dropdownMenu1" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Ranking
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="{{ route("pages.score") }}">Positivo</a>
-                            <a class="dropdown-item"
-                               href="{{ route("pages.score", ['order' => 'reverse']) }}">Negativo</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.stats') }}">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pages.pending') }}">Pendientes</a>
-                    </li>
-                    @if(Auth::check())
+                @if(Auth::check())
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pages.history') }}">Historial</a>
+                        </li>
+                        <li class="nav-item btn-group">
+                            <a class="dropdown-toggle nav-link" type="link" id="dropdownMenu1" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Ranking
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a class="dropdown-item" href="{{ route("pages.score") }}">Positivo</a>
+                                <a class="dropdown-item"
+                                   href="{{ route("pages.score", ['order' => 'reverse']) }}">Negativo</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pages.stats') }}">Estadísticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pages.pending') }}">Pendientes</a>
+                        </li>
                         <li class="nav-item pull-xs-right btn-group">
                             <a class="dropdown-toggle nav-link" type="link" id="dropdownMenu1" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
@@ -43,7 +43,8 @@
                                         class="label label-info">Lvl {{ Auth::user()->level }}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" href="{{ route('pages.explog') }}">XP: {{ Auth::user()->current_exp }} / 1000</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('pages.explog') }}">XP: {{ Auth::user()->current_exp }} / 1000</a>
                                 <progress class="progress progress-striped progress-success dropdown-item"
                                           value="{{ Auth::user()->current_exp }}" max="1000">25%
                                 </progress>
@@ -55,8 +56,8 @@
                         <li class="nav-item pull-xs-right">
                             <img class="img-circle" style="height: 35px" src="{{ Auth::user()->avatar }}"/>
                         </li>
-                    @endif
-                </ul>
+                        @endif
+                    </ul>
             </div>
         </div>
     </nav>

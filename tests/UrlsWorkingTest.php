@@ -19,23 +19,34 @@ class UrlsWorkingTest extends TestCase
         $this->user = User::where('nickname', 'Himliano')->first();
     }
 
-    /**
-     * Testing homepage for non logged in users
-     */
-    public function testNonLoggedInHomepage()
+    /** @test */
+    public function nonLoggedInHomepage()
     {
         $this->visit(route('pages.index'))
-            ->see('CropanBOT')
-            ->see("Login with twitter")
-            ->dontSee("Últimas enviadas a Tumblr");
+            ->see('Cropan Gourmet')
+            ->see("Entrar")
+            ->see('El club de caballeros más selecto de todo el internec')
+            ->dontSee("Últimas enviadas a Tumblr")
+            ->dontSee('Ranking')
+            ->dontSee('Pendientes');
     }
 
-    public function testLoggedInHomepage()
+    /** @test */
+    public function loggedInHomepage()
     {
         $this->actingAs($this->user)
             ->visit(route('pages.index'))
-            ->see('CropanBOT')
+            ->see('Cropan Gourmet')
             ->see("Últimas enviadas a Tumblr")
-            ->dontSee("Login with twitter");
+
+            ->dontSee("Entrar")
+            ->dontSee('El club de caballeros más selecto de todo el internec');
+    }
+
+    /** test */
+    public function nonLoggedHistory()
+    {
+        $this->visit(route('pages.history'))
+            ->assertRedirectedToRoute(route('login'));
     }
 }
