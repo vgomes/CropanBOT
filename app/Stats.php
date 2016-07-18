@@ -59,6 +59,45 @@ class Stats extends Model
         return $collection->toJson();
     }
 
+    public function getGlobalStatsForYears()
+    {
+        $statsForYears = new Collection();
+        $query = \DB::table('picture_stats_log')
+            ->select(\DB::raw('YEAR(date) as year'))
+            ->distinct()
+            ->get();
+
+        foreach ($query as $value) {
+            $year = $value->year;
+
+            $statsForYears->add($this->getGlobalStatsForYear($year));
+        }
+
+        return json_encode($statsForYears);
+    }
+
+    public function getGlobalStatsForYear($year)
+    {
+        $result = \DB::table('picture_stats_log')
+            ->whereYear('date', '=', $year)
+            ->select([
+                \DB::raw('year(date) as year'),
+                \DB::raw('sum(sent) as sent'),
+                \DB::raw('sum(published) as published'),
+                \DB::raw('sum(images_positive) as images_positive'),
+                \DB::raw('sum(images_negative) as images_negative'),
+                \DB::raw('sum(votes) as votes'),
+                \DB::raw('sum(votes_yes) as votes_yes'),
+                \DB::raw('sum(votes_no) as votes_no'),
+            ])
+            ->get();
+
+        $result = array_first($result);
+
+        return $result;
+    }
+
+
 
     /**
      * Ranking for the ratio of pictures sent to Tumblr per user

@@ -17,6 +17,20 @@
             </div>
         </div>
     </div>
+
+    <hr>
+
+    <div class="row">
+        <h4 class="text-xs-center">Desglose por año</h4>
+        <div class="col-md-6">
+            <h5 class="text-xs-center">Imágenes</h5>
+            <div class="graph" id="globalStatsForPicturesYears"></div>
+        </div>
+        <div class="col-md-6">
+            <h5 class="text-xs-center">Votos</h5>
+            <div class="graph" id="globalStatsForVotesYears"></div>
+        </div>
+    </div>
 @endsection
 
 @push('styles')
@@ -32,17 +46,10 @@
 @push('jscode')
 <script>
     new Morris.Bar({
-        // ID of the element in which to draw the chart.
         element: 'globalBarGraph',
-        // Chart data records -- each entry in this array corresponds to a point on
-        // the chart.
         data: JSON.parse('{!! $globalImagesBarGraph !!}'),
-        // The name of the data record attribute that contains x-values.
         xkey: 'title',
-        // A list of names of data record attributes that contain y-values.
         ykeys: ['value'],
-        // Labels for the ykeys -- will be displayed when you hover over the
-        // chart.
         labels: ['Value'],
         hideHover: true
     });
@@ -51,6 +58,26 @@
         element: 'globalImagesYesNoDonut',
         data: JSON.parse('{!! $globalImagesYesNoDonut !!}'),
         colors: ['darkblue', 'red']
-    })
+    });
+
+    new Morris.Bar({
+        element: 'globalStatsForPicturesYears',
+        data: JSON.parse('{!! $globalStatsForYears !!}'),
+        xkey: 'year',
+        ykeys: ['sent', 'published', 'images_positive', 'images_negative'],
+        labels: ['Enviadas a CropanBOT', 'Publicadas en Tumblr', 'Valoración positiva', 'Valoración negativa'],
+        barColors: ['blue', 'darkblue', 'green', 'red'],
+        hideHover: true
+    });
+
+    new Morris.Bar({
+        element: 'globalStatsForVotesYears',
+        data: JSON.parse('{!! $globalStatsForYears !!}'),
+        xkey: 'year',
+        ykeys: ['votes_yes', 'votes_no'],
+        labels: ['Sí', 'No'],
+        barColors: ['green', 'red'],
+        hideHover: true
+    });
 </script>
 @endpush

@@ -4,6 +4,7 @@ namespace Cropan\Http\Controllers;
 
 use Cropan\Diary;
 use Cropan\Http\Requests\VoteRequest;
+use Cropan\PicStatsLog;
 use Cropan\Picture;
 use Cropan\Stats;
 use Cropan\User;
@@ -68,9 +69,12 @@ class Pages extends Controller
         $globalImagesBarGraph = $stats->globalImagesBarGraph();
         $globalImagesYesNoDonut = $stats->globalImagesYesNoDonut();
 
+        $statsForYears = $stats->getGlobalStatsForYears();
+
         return view('pages.stats.global')
             ->with('globalImagesBarGraph', $globalImagesBarGraph)
-            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut);
+            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut)
+            ->with('globalStatsForYears', $statsForYears);
     }
 
     public function stats()
