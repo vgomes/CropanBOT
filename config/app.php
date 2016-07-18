@@ -165,7 +165,12 @@ return [
         \Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
-        \Cropan\Providers\DropboxFilesystemServiceProvider::class
+        \Cropan\Providers\DropboxFilesystemServiceProvider::class,
+
+        /*
+         * Own providers
+         */
+        Cropan\Providers\FooterStatsProvider::class
     ],
 
     /*

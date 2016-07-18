@@ -20,6 +20,17 @@ class Vote extends Model
         return $this->belongsTo(User::class);
     }
 
+    // Scopes
+    public function scopeYes($query)
+    {
+        return $query->whereVote(true);
+    }
+
+    public function scopeNo($query)
+    {
+        return $query->whereVote(false);
+    }
+
     // Events
     static function boot()
     {

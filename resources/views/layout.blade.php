@@ -24,6 +24,8 @@
     @yield('content')
 </div>
 
+@include('includes.footer')
+
 <script src="/js/script.js"></script>
 </body>
 </html>

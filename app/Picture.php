@@ -25,6 +25,11 @@ class Picture extends Model
         return $query->whereNotNull('sent_at');
     }
 
+    public function scopeQueue($query)
+    {
+        return $query->whereNull('sent_at');
+    }
+
     public function scopePublished($query)
     {
         return $query->whereNotNull('published_at');
