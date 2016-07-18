@@ -30,8 +30,12 @@
                                    href="{{ route("pages.score", ['order' => 'reverse']) }}">Negativo</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('pages.stats') }}">Estadísticas</a>
+                        <li class="nav-item btn-group">
+                            <a class="dropdown-toggle nav-link" type="link" data-toggle="dropdown">Estadísticas</a>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">Globales</a>
+                                <a href="#" class="dropdown-item">Usuarios</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('pages.pending') }}">Pendientes</a>

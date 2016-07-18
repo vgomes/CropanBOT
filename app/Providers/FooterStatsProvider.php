@@ -13,7 +13,7 @@ class FooterStatsProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('includes.footer', 'Cropan\Http\Composers\FooterComposer');
+        view()->composer('includes.footer', 'Cropan\Composers\FooterComposer');
     }
 
     /**

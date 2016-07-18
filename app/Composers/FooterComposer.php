@@ -1,6 +1,6 @@
 <?php
 
-namespace Cropan\Http\Composers;
+namespace Cropan\Composers;
 
 use Cropan\Picture;
 use Cropan\User;
