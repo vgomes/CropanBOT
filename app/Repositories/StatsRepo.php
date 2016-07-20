@@ -22,15 +22,18 @@ class StatsRepo
             ->distinct()
             ->get();
 
-        foreach($query as $value)
-        {
+        foreach ($query as $value) {
             $years[] = $value->year;
         }
 
         return $years;
     }
 
-    public function getGlobarYearlyStatsGraph()
+    /**
+     * Gets data for all year's global graphs
+     * @return string
+     */
+    public function getGlobalYearlyAreaGraph()
     {
         $data = [];
 
@@ -38,13 +41,20 @@ class StatsRepo
 
             $data[] = [
                 'year' => $year,
-                'data' => $this->yearlyBarGraph($year)
+                'areaGraph' => $this->yearlyBarGraph($year),
+                'donutGraph' => $this->yearlyDonutGraph($year)
             ];
         }
 
         return json_encode($data);
     }
 
+    /**
+     * Gathers data for graphs
+     * @param Carbon $start
+     * @param Carbon $end
+     * @return Collection|static[]
+     */
     public function globalBarGraph(Carbon $start, Carbon $end)
     {
         $data = PicStatsLog::whereBetween('date', [$start->toDateString(), $end->toDateString()])->get();
@@ -76,102 +86,28 @@ class StatsRepo
         return $results->toArray();
     }
 
-    /**
-     * Data for a donut chart on number of approved/rejected images
-     * @return string
-     */
-    public function globalImagesYesNoDonut()
+    public function globalVotesDonutGraph(Carbon $start, Carbon $end)
     {
-        $yes_images = Picture::yes()->count();
-        $no_images = Picture::no()->count();
-
-        $collection = new Collection();
-
-        $collection->add([
-            'label' => 'Sí',
-            'value' => $yes_images
-        ]);
-
-        $collection->add([
-            'label' => 'No',
-            'value' => $no_images
-        ]);
-
-        return $collection->toJson();
-    }
-
-    public function getGlobalStatsForYears()
-    {
-        $statsForYears = new Collection();
-        $query = \DB::table('picture_stats_log')
-            ->select(\DB::raw('YEAR(date) as year'))
-            ->distinct()
+        $data = \DB::table('picture_stats_log')
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->select(\DB::raw('sum(votes_yes) as yes'), \DB::raw('sum(votes_no) as no'))
             ->get();
 
-        foreach ($query as $value) {
-            $year = $value->year;
+        $data = array_first($data);
 
-            $statsForYears->add($this->getGlobalStatsForYear($year));
-        }
-
-        return json_encode($statsForYears);
-    }
-
-    public function getGlobalStatsForYear($year)
-    {
-        $result = \DB::table('picture_stats_log')
-            ->whereYear('date', '=', $year)
-            ->select([
-                \DB::raw('year(date) as year'),
-                \DB::raw('sum(sent) as sent'),
-                \DB::raw('sum(published) as published'),
-                \DB::raw('sum(images_positive) as images_positive'),
-                \DB::raw('sum(images_negative) as images_negative'),
-                \DB::raw('sum(votes) as votes'),
-                \DB::raw('sum(votes_yes) as votes_yes'),
-                \DB::raw('sum(votes_no) as votes_no'),
-            ])
-            ->get();
-
-        $result = array_first($result);
+        $result = [];
+        $result[] = ['label' => 'Sí', 'value' => $data->yes];
+        $result[] = ['label' => 'No', 'value' => $data->no];
 
         return $result;
     }
 
-    public function getGlobalStatsForMonths()
+    public function yearlyDonutGraph($year)
     {
-        $statsForYears = new Collection();
-        $query = \DB::table('picture_stats_log')
-            ->select(\DB::raw('YEAR(date) as year'))
-            ->distinct()
-            ->get();
+        $begin = Carbon::create($year)->startOfYear();
+        $end = Carbon::create($year)->endOfYear();
 
-        foreach ($query as $value) {
-            $year = $value->year;
-
-            $statsForYears->add($this->getGlobalStatsForMonth($month, $year = null));
-        }
-
-        return json_encode($statsForYears);
-    }
-
-    public function getGlobalStatsForMonth($month, $year = null)
-    {
-        $result = \DB::table('picture_stats_log')
-            ->whereYear('date', '=', $year)
-            ->select([
-                \DB::raw('year(date) as year'),
-                \DB::raw('sum(sent) as sent'),
-                \DB::raw('sum(published) as published'),
-                \DB::raw('sum(images_positive) as images_positive'),
-                \DB::raw('sum(images_negative) as images_negative'),
-                \DB::raw('sum(votes) as votes'),
-                \DB::raw('sum(votes_yes) as votes_yes'),
-                \DB::raw('sum(votes_no) as votes_no'),
-            ])
-            ->get();
-
-        $result = array_first($result);
+        $result = $this->globalVotesDonutGraph($begin, $end);
 
         return $result;
     }

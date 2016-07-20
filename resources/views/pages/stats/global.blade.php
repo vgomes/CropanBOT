@@ -20,14 +20,14 @@
 
     <hr>
 
-    @foreach(json_decode($globalImagesBarGraph, true) as $item)
+    @foreach(json_decode($globalImagesAreaGraph, true) as $item)
         <div class="row">
             <div class="col-md-12"><h4 class="text-xs-center">{{ $item['year'] }}</h4></div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="graph" id="globalStatsForPicturesYears_{{ $item['year'] }}"></div>
             </div>
-            <div class="col-md-4">
-                <div class="graph" id="globalStatsForVotesYears"></div>
+            <div class="col-md-3">
+                <div class="graph" id="globalStatsForVotesYears_{{ $item['year'] }}"></div>
             </div>
         </div>
 
@@ -35,13 +35,21 @@
         <script>
             new Morris.Area({
                 element: 'globalStatsForPicturesYears_{{ $item['year'] }}',
-                data: {!! json_encode($item['data']) !!},
+                data: {!! json_encode($item['areaGraph']) !!},
                 xkey: 'month',
                 ykeys: ['sent', 'published', 'images_positive', 'images_negative'],
                 labels: ['Enviadas', 'Publicadas', 'Puntuación positiva', 'Puntuación negativa'],
                 hideHover: true,
-//                barColors: ['#003049', '#f96900', '#61d095', '#d62828']
-                parseTime: false
+                lineColors: ['#003049', '#f96900', '#61d095', '#d62828'],
+                parseTime: false,
+                behaveLikeLine: true
+            });
+        </script>
+        <script>
+            new Morris.Donut({
+                element: 'globalStatsForVotesYears_{{ $item['year'] }}',
+                data: {!! json_encode($item['donutGraph']) !!},
+                colors: ['#61d095', '#d62828']
             });
         </script>
         @endpush

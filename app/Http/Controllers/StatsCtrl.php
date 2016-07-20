@@ -20,15 +20,10 @@ class StatsCtrl extends Controller
 
     public function global()
     {
-        $globalImagesBarGraph = $this->repo->getGlobarYearlyStatsGraph();
+        $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
 
-//        $globalImagesBarGraph = $stats->globalImagesBarGraph();
-//        $globalImagesYesNoDonut = $stats->globalImagesYesNoDonut();
-//
-//        $statsForYears = $stats->getGlobalStatsForYears();
-//
         return view('pages.stats.global')
-            ->with('globalImagesBarGraph', $globalImagesBarGraph);
+            ->with('globalImagesAreaGraph', $globalImagesAreaGraph);
 //            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut)
 //            ->with('globalStatsForYears', $statsForYears);
     }
