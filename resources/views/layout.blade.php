@@ -20,7 +20,7 @@
 @include('includes.header')
 
 <!-- Begin page content -->
-<div class="container">
+<div class="container-fluid">
     @yield('content')
 </div>
 

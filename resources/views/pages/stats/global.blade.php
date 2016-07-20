@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <h5 class="text-xs-center">Totales</h5>
                 <div class="graph" id="globalBarGraph"></div>
             </div>
@@ -22,13 +22,11 @@
 
     @foreach(json_decode($globalImagesBarGraph, true) as $item)
         <div class="row">
-            <h4 class="text-xs-center">{{ $item['year'] }}</h4>
-            <div class="col-md-6">
-                <h5 class="text-xs-center">Imágenes</h5>
-                <div class="graph" id="globalStatsForPicturesYears"></div>
+            <div class="col-md-12"><h4 class="text-xs-center">{{ $item['year'] }}</h4></div>
+            <div class="col-md-8">
+                <div class="graph" id="globalStatsForPicturesYears_{{ $item['year'] }}"></div>
             </div>
-            <div class="col-md-6">
-                <h5 class="text-xs-center">Votos</h5>
+            <div class="col-md-4">
                 <div class="graph" id="globalStatsForVotesYears"></div>
             </div>
         </div>
@@ -36,12 +34,13 @@
         @push('jscode')
         <script>
             new Morris.Bar({
-                element: 'globalStatsForPicturesYears',
+                element: 'globalStatsForPicturesYears_{{ $item['year'] }}',
                 data: {!! json_encode($item['data']) !!},
                 xkey: 'month',
                 ykeys: ['sent', 'published', 'images_positive', 'images_negative'],
-                labels: ['Enviadas', 'Publicadas', 'Puntuación postiva', 'Puntuación negativa'],
-                hideHover: true
+                labels: ['Enviadas', 'Publicadas', 'Puntuación positiva', 'Puntuación negativa'],
+                hideHover: true,
+                barColors: ['#003049', '#f96900', '#61d095', '#d62828']
             });
         </script>
         @endpush

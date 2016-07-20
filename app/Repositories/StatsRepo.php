@@ -15,11 +15,19 @@ class StatsRepo
      */
     public function getDistinctYearsFromPictures()
     {
-        $a = PicStatsLog::get()->groupBy(function ($item) {
-            return Carbon::parse($item->created_at)->year;
-        });
+        $years = [];
 
-        return array_keys($a->toArray());
+        $query = \DB::table('picture_stats_log')
+            ->select(\DB::raw('YEAR(date) as year'))
+            ->distinct()
+            ->get();
+
+        foreach($query as $value)
+        {
+            $years[] = $value->year;
+        }
+
+        return $years;
     }
 
     public function getGlobarYearlyStatsGraph()
