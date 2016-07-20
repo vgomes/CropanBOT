@@ -23,11 +23,19 @@ class StatsCtrl extends Controller
     {
         $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
         $totalImagesData = $this->repo->getPictureGlobalTotals();
+        $getVotesGlobalTotals = $this->repo->getVotesGlobalTotals();
 
         return view('pages.stats.global')
             ->with('globalImagesAreaGraph', $globalImagesAreaGraph)
-            ->with('totalImagesData', $totalImagesData);
-//            ->with('globalStatsForYears', $statsForYears);
+            ->with('totalImagesData', $totalImagesData)
+            ->with('getVotesGlobalTotals', $getVotesGlobalTotals);
+    }
+
+    public function yearly($year)
+    {
+        $picturesData = $this->repo->getMonthlyAreaGraph($year);
+
+        return view('pages.stats.yearly')->with('data', $picturesData);
     }
 
     public function stats()

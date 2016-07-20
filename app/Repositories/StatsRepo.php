@@ -121,15 +121,6 @@ class StatsRepo
         $approved = Picture::yes()->count();
         $rejected = Picture::no()->count();
 
-        $yes_votes = Vote::yes()->count();
-        $no_votes = Vote::no()->count();
-
-        $votes_count = $yes_votes + $no_votes;
-
-        $global_yes_percent = number_format(($yes_votes / $votes_count) * 100, 2);
-        $global_no_percent = number_format(($no_votes / $votes_count) * 100, 2);
-
-
         $data = [
             'Enviadas' => $pictures_count,
             'Publicadas' => $published_count,
@@ -151,5 +142,31 @@ class StatsRepo
         }
 
         return json_encode($result);
+    }
+
+    public function getVotesGlobalTotals()
+    {
+        $yes_votes = Vote::yes()->count();
+        $no_votes = Vote::no()->count();
+
+        $total = $yes_votes + $no_votes;
+
+        $result = [];
+        $result[] = ['label' => 'Sí', 'value' => $yes_votes, 'total' => $total];
+        $result[] = ['label' => 'No', 'value' => $no_votes, 'total' => $total];
+
+        return json_encode($result);
+    }
+
+    public function getMonthlyAreaGraph($year)
+    {
+        $begin = Carbon::create($year)->startOfYear();
+        $end = Carbon::create($year)->endOfYear();
+
+        $data = $this->globalBarGraph($begin, $end)->groupBy(function (PicStatsLog $item) {
+            return Carbon::parse($item->date)->formatLocalized("%B");
+        });
+
+        return $data->toJson();
     }
 }
