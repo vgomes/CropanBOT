@@ -94,10 +94,11 @@ class StatsRepo
             ->get();
 
         $data = array_first($data);
+        $total = $data->yes + $data->no;
 
         $result = [];
-        $result[] = ['label' => 'Sí', 'value' => $data->yes];
-        $result[] = ['label' => 'No', 'value' => $data->no];
+        $result[] = ['label' => 'Sí', 'value' => $data->yes, 'total' => $total];
+        $result[] = ['label' => 'No', 'value' => $data->no, 'total' => $total];
 
         return $result;
     }

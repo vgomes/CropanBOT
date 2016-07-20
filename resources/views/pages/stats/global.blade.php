@@ -49,7 +49,8 @@
             new Morris.Donut({
                 element: 'globalStatsForVotesYears_{{ $item['year'] }}',
                 data: {!! json_encode($item['donutGraph']) !!},
-                colors: ['#61d095', '#d62828']
+                colors: ['#61d095', '#d62828'],
+                formatter: function (y, data) { return ((y / data.total) * 100).toFixed(2) + '%' }
             });
         </script>
         @endpush

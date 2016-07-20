@@ -5,6 +5,7 @@ namespace Cropan\Http\Controllers;
 use Carbon\Carbon;
 use Cropan\Repositories\StatsRepo;
 use Cropan\Stats;
+use Cropan\Vote;
 
 class StatsCtrl extends Controller
 {
@@ -21,6 +22,8 @@ class StatsCtrl extends Controller
     public function global()
     {
         $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
+
+        $votes = Vote::all()->count();
 
         return view('pages.stats.global')
             ->with('globalImagesAreaGraph', $globalImagesAreaGraph);
