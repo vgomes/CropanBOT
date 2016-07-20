@@ -32,15 +32,7 @@ class CreateStatsTable extends Migration
         });
 
         // populate with data from the database
-
-        $picDate = Picture::oldest()->first()->created_at;
-        $voteDate = Vote::oldest()->first()->created_at;
-
-        if ($picDate->lte($voteDate)) {
-            $firstDate = $picDate;
-        } else {
-            $firstDate = $voteDate;
-        }
+        $firstDate = Picture::oldest()->first()->created_at;
 
         while ($firstDate->lt(Carbon::today())) {
             $date = $firstDate->toDateString();

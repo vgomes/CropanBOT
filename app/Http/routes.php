@@ -7,7 +7,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
     Route::get('/score/{order?}', ['as' => 'pages.score', 'uses' => 'Pages@score']);
 
-    Route::get('/stats/global', ['as' => 'pages.stats.global', 'uses' => 'Pages@statsGlobal']);
+    Route::get('/stats/global', ['as' => 'pages.stats.global', 'uses' => 'StatsCtrl@global']);
     Route::get('/stats/users', ['as' => 'pages.stats.users', 'uses' => 'Pages@stats']);
 
     Route::get('/v/{image}/{choice?}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);

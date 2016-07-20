@@ -4,9 +4,7 @@ namespace Cropan\Http\Controllers;
 
 use Cropan\Diary;
 use Cropan\Http\Requests\VoteRequest;
-use Cropan\PicStatsLog;
 use Cropan\Picture;
-use Cropan\Stats;
 use Cropan\User;
 use Cropan\Vote;
 use League\OAuth1\Client\Credentials\CredentialsException;
@@ -60,40 +58,6 @@ class Pages extends Controller
 
 
         return view('pages.index')->with('pictures', $pictures)->with('title', $title);
-    }
-
-    public function statsGlobal()
-    {
-        $stats = new Stats();
-
-        $globalImagesBarGraph = $stats->globalImagesBarGraph();
-        $globalImagesYesNoDonut = $stats->globalImagesYesNoDonut();
-
-        $statsForYears = $stats->getGlobalStatsForYears();
-
-        return view('pages.stats.global')
-            ->with('globalImagesBarGraph', $globalImagesBarGraph)
-            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut)
-            ->with('globalStatsForYears', $statsForYears);
-    }
-
-    public function stats()
-    {
-        $stats = new Stats();
-
-        $ratioTumblr = $stats->tumblrRanking();
-        $ratioYLD = $stats->yesRatio();
-        $ratioNO = $stats->noRatio();
-
-        $uncommonTaste = $stats->uncommonTaste();
-        $nitpicker = $stats->nitPicker();
-
-        return view('pages.stats')
-            ->with('ratioTumblr', $ratioTumblr)
-            ->with('ratioYLD', $ratioYLD)
-            ->with('ratioNO', $ratioNO)
-            ->with('uncommonTaste', $uncommonTaste)
-            ->with('nitpicker', $nitpicker);
     }
 
     public function vote(Picture $image, $choice = null)
