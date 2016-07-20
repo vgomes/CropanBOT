@@ -13,6 +13,7 @@ class FooterComposer
     {
         $membersCount = User::all()->count();
         $pictures_count = Picture::sent()->count();
+        $published_count = Picture::published()->count();
 
         $votes = Vote::all();
 
@@ -28,6 +29,7 @@ class FooterComposer
 
         $view->with('members_count', $membersCount);
         $view->with('pictures_count', $pictures_count);
+        $view->with('published_count', $published_count);
         $view->with('votes_count', $votes_count);
         $view->with('global_yes_percent', $global_yes_percent);
         $view->with('global_no_percent', $global_no_percent);
