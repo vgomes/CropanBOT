@@ -22,12 +22,11 @@ class StatsCtrl extends Controller
     public function global()
     {
         $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
-
-        $votes = Vote::all()->count();
+        $totalImagesData = $this->repo->getPictureGlobalTotals();
 
         return view('pages.stats.global')
-            ->with('globalImagesAreaGraph', $globalImagesAreaGraph);
-//            ->with('globalImagesYesNoDonut', $globalImagesYesNoDonut)
+            ->with('globalImagesAreaGraph', $globalImagesAreaGraph)
+            ->with('totalImagesData', $totalImagesData);
 //            ->with('globalStatsForYears', $statsForYears);
     }
 

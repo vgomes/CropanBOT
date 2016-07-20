@@ -5,6 +5,7 @@ namespace Cropan\Repositories;
 use Carbon\Carbon;
 use Cropan\PicStatsLog;
 use Cropan\Picture;
+use Cropan\Vote;
 use Illuminate\Database\Eloquent\Collection;
 
 class StatsRepo
@@ -111,5 +112,44 @@ class StatsRepo
         $result = $this->globalVotesDonutGraph($begin, $end);
 
         return $result;
+    }
+
+    public function getPictureGlobalTotals() {
+        $pictures_count = Picture::sent()->count();
+        $published_count = Picture::published()->count();
+        $pictures_queue_count = Picture::queue()->count();
+        $approved = Picture::yes()->count();
+        $rejected = Picture::no()->count();
+
+        $yes_votes = Vote::yes()->count();
+        $no_votes = Vote::no()->count();
+
+        $votes_count = $yes_votes + $no_votes;
+
+        $global_yes_percent = number_format(($yes_votes / $votes_count) * 100, 2);
+        $global_no_percent = number_format(($no_votes / $votes_count) * 100, 2);
+
+
+        $data = [
+            'Enviadas' => $pictures_count,
+            'Publicadas' => $published_count,
+            'En cola' => $pictures_queue_count,
+            'Aprobadas' => $approved,
+            'Rechazadas' => $rejected
+        ];
+
+        $result = [];
+        $keys = array_keys($data);
+        $values = array_values($data);
+
+        for ($key = 0; $key < count($keys); $key++)
+        {
+            $result[] = [
+                'title' => $keys[$key],
+                'value' => $values[$key]
+            ];
+        }
+
+        return json_encode($result);
     }
 }

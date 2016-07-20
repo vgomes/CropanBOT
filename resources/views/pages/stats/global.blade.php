@@ -7,11 +7,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <h5 class="text-xs-center">Totales</h5>
                 <div class="graph" id="globalBarGraph"></div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <h5 class="text-xs-center">Aprobadas / Rechazadas</h5>
                 <div class="graph" id="globalImagesYesNoDonut"></div>
             </div>
@@ -50,11 +50,26 @@
                 element: 'globalStatsForVotesYears_{{ $item['year'] }}',
                 data: {!! json_encode($item['donutGraph']) !!},
                 colors: ['#61d095', '#d62828'],
-                formatter: function (y, data) { return ((y / data.total) * 100).toFixed(2) + '%' }
+                formatter: function (y, data) {
+                    return ((y / data.total) * 100).toFixed(2) + '%'
+                }
             });
         </script>
         @endpush
     @endforeach
+
+    @push('jscode')
+    <script>
+        new Morris.Bar({
+            element: 'globalBarGraph',
+            data: {!! $totalImagesData !!},
+            xkey: 'title',
+            ykeys: ['value'],
+            labels: ['Total'],
+            barColors: ['#0b62a4', '#003049', '#f96900', '#61d095', '#d62828']
+        });
+    </script>
+    @endpush
 @endsection
 
 @push('styles')
