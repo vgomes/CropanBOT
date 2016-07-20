@@ -33,14 +33,15 @@
 
         @push('jscode')
         <script>
-            new Morris.Bar({
+            new Morris.Area({
                 element: 'globalStatsForPicturesYears_{{ $item['year'] }}',
                 data: {!! json_encode($item['data']) !!},
                 xkey: 'month',
                 ykeys: ['sent', 'published', 'images_positive', 'images_negative'],
                 labels: ['Enviadas', 'Publicadas', 'Puntuación positiva', 'Puntuación negativa'],
                 hideHover: true,
-                barColors: ['#003049', '#f96900', '#61d095', '#d62828']
+//                barColors: ['#003049', '#f96900', '#61d095', '#d62828']
+                parseTime: false
             });
         </script>
         @endpush
