@@ -40,22 +40,10 @@ class StatsCtrl extends Controller
         return view('pages.stats.yearly')->with('data', $picturesData);
     }
 
-    public function stats()
+    public function statsUsers()
     {
-        $stats = new Stats();
+        $usersBarGraph = $this->repo->usersPicturesBarGraph();
 
-        $ratioTumblr = $stats->tumblrRanking();
-        $ratioYLD = $stats->yesRatio();
-        $ratioNO = $stats->noRatio();
-
-        $uncommonTaste = $stats->uncommonTaste();
-        $nitpicker = $stats->nitPicker();
-
-        return view('pages.stats')
-            ->with('ratioTumblr', $ratioTumblr)
-            ->with('ratioYLD', $ratioYLD)
-            ->with('ratioNO', $ratioNO)
-            ->with('uncommonTaste', $uncommonTaste)
-            ->with('nitpicker', $nitpicker);
+        return view('pages.stats.users')->with('usersBarGraph', $usersBarGraph);
     }
 }

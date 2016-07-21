@@ -9,7 +9,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/stats/global', ['as' => 'pages.stats.global', 'uses' => 'StatsCtrl@global']);
     Route::get('/stats/global/{year}', ['as' => 'pages.stats.global.year', 'uses' => 'StatsCtrl@yearly']);
-    Route::get('/stats/users', ['as' => 'pages.stats.users', 'uses' => 'Pages@stats']);
+    Route::get('/stats/users', ['as' => 'pages.stats.users', 'uses' => 'StatsCtrl@statsUsers']);
 
     Route::get('/v/{image}/{choice?}', ['as' => 'pages.vote', 'uses' => 'Pages@vote']);
     Route::get('/pending', ['as' => 'pages.pending', 'uses' => 'Pages@pending']);

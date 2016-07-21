@@ -6422,7 +6422,7 @@ html {
 }
 body {
     /* Margin bottom by footer height */
-    margin-top: 90px;
+    margin-top: 150px;
     margin-bottom: 60px;
 }
 .footer {
@@ -6460,6 +6460,6 @@ code {
 }
 
 .graph {
-    height: 250px;
+    height: 300px;
 }
 /*# sourceMappingURL=style.css.map */

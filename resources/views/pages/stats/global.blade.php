@@ -21,11 +21,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-6">
-                <h4>Distribución horaria de imágenes enviadas </h4>
+                <h4>Distribución horaria de imágenes enviadas (%)</h4>
                 <div class="graph" id="picturesPerHour"></div>
             </div>
             <div class="col-md-6">
-                <h4>Distribución horaria de votos emitidos</h4>
+                <h4>Distribución horaria de votos emitidos (%)</h4>
                 <div class="graph" id="votesPerHour"></div>
             </div>
         </div>

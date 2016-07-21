@@ -5,6 +5,7 @@ namespace Cropan\Repositories;
 use Carbon\Carbon;
 use Cropan\PicStatsLog;
 use Cropan\Picture;
+use Cropan\User;
 use Cropan\Vote;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -180,14 +181,16 @@ class StatsRepo
 
         $results = array_fill(0, 23, ['yes' => 0, 'no' => 0, 'total' => 0]);
 
+        $votes = Vote::count();
+
         foreach ($data as $item) {
             switch ($item->vote) {
                 case 0 :
-                    $results[$item->hour]['no'] = $item->value;
+                    $results[$item->hour]['no'] = number_format(($item->value / $votes) * 100, 2);
                     break;
 
                 case 1 :
-                    $results[$item->hour]['yes'] = $item->value;
+                    $results[$item->hour]['yes'] = number_format(($item->value / $votes) * 100, 2);
                     break;
             }
         }
@@ -208,15 +211,41 @@ class StatsRepo
 
         $results = array_fill(0, 23, null);
 
+        $pictures = Picture::count();
+
         foreach ($results as $key => $hour) {
             $results[$key]['hour'] = $key;
             $results[$key]['value'] = 0;
         }
 
         foreach ($data as $item) {
-            $results[$item->hour]['value'] = $item->value;
+            $results[$item->hour]['value'] = number_format(($item->value / $pictures) * 100, 2);
         }
 
         return $results;
+    }
+
+    public function usersPicturesBarGraph()
+    {
+        $users = User::with(['pictures'])->get();
+
+        $data = [];
+
+        $users = $users->each(function (User $user) use ($data) {
+            $user->sent = $user->pictures->count();
+            $user->published = $user->pictures()->published()->count();
+            $user->publishedRatio = (float)number_format($user->published / $user->sent, 6);
+        })->sortByDesc('publishedRatio');
+
+        $users->each(function (User $user) use (&$data) {
+            $data[] = [
+                'nickname' => $user->nickname,
+                'sent' => $user->pictures->count(),
+                'published' => $user->pictures()->published()->count(),
+                'publishedRatio' => (float)number_format($user->published / $user->sent, 6)
+            ];
+        });
+
+        return $data;
     }
 }
