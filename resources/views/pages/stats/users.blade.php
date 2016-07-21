@@ -47,6 +47,88 @@
             </div>
         </div>
     </div>
+
+    <hr>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="graph" id="usersVotesBarGraph"></div>
+        </div>
+    </div>
+
+    <hr>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="text-xs-center">YLD / No (%)</h5>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>YLD</th>
+                    <th>No</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(array_reverse(array_sort($usersVotesBarGraph, function ($user) {
+                    return $user['yes'];
+                }), true) as $user)
+                    <tr>
+                        <th scope="row">{{ $user['nickname'] }}</th>
+                        <td class="text-success">{{ $user['yes'] }}</td>
+                        <td class="text-danger">{{ $user['no'] }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="text-xs-center">Gusto peculiar</h5>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Veces</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($uncommonTaste as $user)
+                    <tr>
+                        <th scope="row">{{ $user->nickname }}</th>
+                        <td>{{ $user->times }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="text-xs-center">Puntilloso</h5>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Veces</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($nitPicker as $user)
+                    <tr>
+                        <th scope="row">{{ $user->nickname }}</th>
+                        <td>{{ $user->times }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection
 
 @push('jscode')
@@ -58,7 +140,7 @@
         ykeys: ['sent', 'published'],
         labels: ['Enviadas', 'Publicadas'],
         resize: 'true',
-        barColors: ['#0b62a4', '#003049'],
+        barColors: ['#f96900', '#61d095'],
         hideHover: true
     });
 </script>
@@ -71,6 +153,18 @@
         labels: ['Publicadas en Tumblr'],
         resize: 'true',
         barColors: ['#0b62a4', '#003049'],
+        hideHover: true
+    });
+</script>
+<script>
+    new Morris.Bar({
+        element: 'usersVotesBarGraph',
+        data: {!! json_encode($usersVotesBarGraph) !!},
+        xkey: 'nickname',
+        ykeys: ['ratio', 'yes', 'no'],
+        labels: ['Votadas (%)', 'YLD (%)', 'No (%)'],
+        resize: 'true',
+        barColors: ['#f96900', '#61d095', '#d62828'],
         hideHover: true
     });
 </script>

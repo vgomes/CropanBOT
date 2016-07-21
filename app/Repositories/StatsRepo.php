@@ -248,4 +248,63 @@ class StatsRepo
 
         return $data;
     }
+
+    public function usersVotesBarGraph()
+    {
+        $users = User::with(['votes'])->get();
+        $pictures = Picture::sent()->count();
+
+        $data = [];
+
+        $users = $users->each(function (User $user) use ($data, $pictures) {
+            $user->votesCasted = $user->votes->count();
+            $user->votesYes = (float) number_format(100 * $user->votes()->yes()->count() / $user->votesCasted, 4);
+            $user->votesNo = (float) number_format(100 * $user->votes()->no()->count() / $user->votesCasted, 4);
+            $user->votedRatio = (float) number_format(100 * $user->votesCasted / $pictures, 6);
+        })->sortByDesc('votedRatio');
+
+        $users->each(function (User $user) use (&$data) {
+            $data[] = [
+                'nickname' => $user->nickname,
+                'yes' => $user->votesYes,
+                'no' => $user->votesNo,
+                'ratio' => $user->votedRatio
+            ];
+        });
+
+        return $data;
+    }
+
+    /**
+     * Returns ranking of users with the count of times that every user has been the only one that has voted yes where
+     * everyone else has voted no.
+     * @return array|static|static[]
+     */
+    public function uncommonTaste()
+    {
+        $results = \DB::select("select u.nickname, count(u.id) as times
+            from (select * from votes where vote = 1 ) v join ( select * from pictures where yes = 1 and score <= 0) p on v.picture_id = p.id
+                join users u on v.user_id = u.telegram_id
+            group by u.id
+            order by times desc");
+
+        $results = Collection::make($results);
+        return $results;
+    }
+
+    /**
+     * Ranking of users with the count of the times they have been the only one voting no when anyone else has voted yes
+     * @return array|static|static[]
+     */
+    public function nitPicker()
+    {
+        $results = \DB::select("select u.nickname, count(u.id) as times
+            from (select * from votes where vote = 0 ) v join ( select * from pictures where no = 1 and score >= 0) p on v.picture_id = p.id
+                join users u on v.user_id = u.telegram_id
+            group by u.id
+            order by times desc");
+
+        $results = Collection::make($results);
+        return $results;
+    }
 }

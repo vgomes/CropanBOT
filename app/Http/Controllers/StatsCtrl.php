@@ -3,7 +3,6 @@
 namespace Cropan\Http\Controllers;
 
 use Cropan\Repositories\StatsRepo;
-use Cropan\Stats;
 
 class StatsCtrl extends Controller
 {
@@ -43,7 +42,14 @@ class StatsCtrl extends Controller
     public function statsUsers()
     {
         $usersBarGraph = $this->repo->usersPicturesBarGraph();
+        $usersVotesBarGraph = $this->repo->usersVotesBarGraph();
+        $uncommonTaste = $this->repo->uncommonTaste();
+        $nitPicker = $this->repo->nitPicker();
 
-        return view('pages.stats.users')->with('usersBarGraph', $usersBarGraph);
+        return view('pages.stats.users')
+            ->with('usersBarGraph', $usersBarGraph)
+            ->with('usersVotesBarGraph', $usersVotesBarGraph)
+            ->with('uncommonTaste', $uncommonTaste)
+            ->with('nitPicker', $nitPicker);
     }
 }
