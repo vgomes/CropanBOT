@@ -22,12 +22,14 @@ class StatsCtrl extends Controller
         $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
         $totalImagesData = $this->repo->getPictureGlobalTotals();
         $getVotesGlobalTotals = $this->repo->getVotesGlobalTotals();
+        $picturesPerHour = $this->repo->picturesPerHour();
         $votesPerHour = $this->repo->votesPerHour();
 
         return view('pages.stats.global')
             ->with('globalImagesAreaGraph', $globalImagesAreaGraph)
             ->with('totalImagesData', $totalImagesData)
             ->with('getVotesGlobalTotals', $getVotesGlobalTotals)
+            ->with('picturesPerHour', $picturesPerHour)
             ->with('votesPerHour', $votesPerHour);
     }
 

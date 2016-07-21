@@ -95,6 +95,17 @@
     </script>
     <script>
         new Morris.Line({
+            element: 'picturesPerHour',
+            data: {!! json_encode($picturesPerHour) !!},
+            xkey: 'hour',
+            ykeys: ['value'],
+            labels: ['Imágenes'],
+            hideHover: true,
+            lineColors: ['#003049'],
+            parseTime: false
+        });
+
+        new Morris.Line({
             element: 'votesPerHour',
             data: {!! json_encode($votesPerHour) !!},
             xkey: 'hour',

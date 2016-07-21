@@ -192,8 +192,7 @@ class StatsRepo
             }
         }
 
-        foreach ($results as $key => $hour)
-        {
+        foreach ($results as $key => $hour) {
             $results[$key]['hour'] = $key;
         }
 
@@ -202,6 +201,22 @@ class StatsRepo
 
     public function picturesPerHour()
     {
+        $data = \DB::table('pictures')
+            ->groupBy(\DB::raw('HOUR(created_at)'))
+            ->select([\DB::raw('HOUR(created_at) as hour'), \DB::raw('COUNT(id) as value')])
+            ->get();
 
+        $results = array_fill(0, 23, null);
+
+        foreach ($results as $key => $hour) {
+            $results[$key]['hour'] = $key;
+            $results[$key]['value'] = 0;
+        }
+
+        foreach ($data as $item) {
+            $results[$item->hour]['value'] = $item->value;
+        }
+
+        return $results;
     }
 }
