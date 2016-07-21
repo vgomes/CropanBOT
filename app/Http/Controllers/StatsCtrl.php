@@ -2,10 +2,8 @@
 
 namespace Cropan\Http\Controllers;
 
-use Carbon\Carbon;
 use Cropan\Repositories\StatsRepo;
 use Cropan\Stats;
-use Cropan\Vote;
 
 class StatsCtrl extends Controller
 {
@@ -24,11 +22,13 @@ class StatsCtrl extends Controller
         $globalImagesAreaGraph = $this->repo->getGlobalYearlyAreaGraph();
         $totalImagesData = $this->repo->getPictureGlobalTotals();
         $getVotesGlobalTotals = $this->repo->getVotesGlobalTotals();
+        $votesPerHour = $this->repo->votesPerHour();
 
         return view('pages.stats.global')
             ->with('globalImagesAreaGraph', $globalImagesAreaGraph)
             ->with('totalImagesData', $totalImagesData)
-            ->with('getVotesGlobalTotals', $getVotesGlobalTotals);
+            ->with('getVotesGlobalTotals', $getVotesGlobalTotals)
+            ->with('votesPerHour', $votesPerHour);
     }
 
     public function yearly($year)

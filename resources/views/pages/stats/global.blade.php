@@ -18,6 +18,19 @@
 
     <hr>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="graph" id="picturesPerHour"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="graph" id="votesPerHour"></div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
     @foreach(json_decode($globalImagesAreaGraph, true) as $item)
         <div class="row">
             <div class="col-md-12"><h4 class="text-xs-center"><a href="{{ route('pages.stats.global.year', ['year' => $item['year']]) }}">{{ $item['year'] }}</a></h4></div>
@@ -78,6 +91,18 @@
             formatter: function (y, data) {
                 return ((y / data.total) * 100).toFixed(2) + '%'
             }
+        })
+    </script>
+    <script>
+        new Morris.Line({
+            element: 'votesPerHour',
+            data: {!! json_encode($votesPerHour) !!},
+            xkey: 'hour',
+            ykeys: ['yes', 'no'],
+            labels: ['Sí', 'No'],
+            hideHover: true,
+            lineColors: ['#61d095', '#d62828'],
+            parseTime: false
         })
     </script>
     @endpush

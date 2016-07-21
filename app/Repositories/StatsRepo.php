@@ -114,7 +114,8 @@ class StatsRepo
         return $result;
     }
 
-    public function getPictureGlobalTotals() {
+    public function getPictureGlobalTotals()
+    {
         $pictures_count = Picture::sent()->count();
         $published_count = Picture::published()->count();
         $pictures_queue_count = Picture::queue()->count();
@@ -133,8 +134,7 @@ class StatsRepo
         $keys = array_keys($data);
         $values = array_values($data);
 
-        for ($key = 0; $key < count($keys); $key++)
-        {
+        for ($key = 0; $key < count($keys); $key++) {
             $result[] = [
                 'title' => $keys[$key],
                 'value' => $values[$key]
@@ -168,5 +168,40 @@ class StatsRepo
         });
 
         return $data->toJson();
+    }
+
+    public function votesPerHour()
+    {
+        $data = \DB::table('votes')
+            ->groupBy('vote')
+            ->groupBy(\DB::raw('HOUR(created_at)'))
+            ->select([\DB::raw('HOUR(created_at) as hour'), \DB::raw('COUNT(id) as value'), 'vote'])
+            ->get();
+
+        $results = array_fill(0, 23, ['yes' => 0, 'no' => 0, 'total' => 0]);
+
+        foreach ($data as $item) {
+            switch ($item->vote) {
+                case 0 :
+                    $results[$item->hour]['no'] = $item->value;
+                    break;
+
+                case 1 :
+                    $results[$item->hour]['yes'] = $item->value;
+                    break;
+            }
+        }
+
+        foreach ($results as $key => $hour)
+        {
+            $results[$key]['hour'] = $key;
+        }
+
+        return $results;
+    }
+
+    public function picturesPerHour()
+    {
+
     }
 }
