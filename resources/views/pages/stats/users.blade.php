@@ -7,23 +7,43 @@
 
     <div class="row">
         <div class="col-md-12">
+            <h5 class="text-xs-center">Estadísticas globales</h5>
             <div class="graph" id="usersBarGraph"></div>
-        </div>
-        <div class="col-md-12">
-            <div class="graph" id="usersTumblrRatioBarGraph"></div>
         </div>
     </div>
 
     <hr>
 
+    <br>
+    <br>
+
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-9">
-
+                <h5 class="text-xs-center">Ratio de enviadas a Tumblr</h5>
+                <div class="graph" id="usersTumblrRatioBarGraph"></div>
             </div>
 
             <div class="col-md-3">
-
+                <div>
+                    <h5 class="text-xs-center">Ratio enviadas a Tumblr</h5>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Ratio</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($usersBarGraph as $user)
+                            <tr>
+                                <th scope="row">{{ $user['nickname'] }}</th>
+                                <td>{{ $user['publishedRatio'] }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
