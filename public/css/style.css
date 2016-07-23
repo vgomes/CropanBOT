@@ -6422,7 +6422,7 @@ html {
 }
 body {
     /* Margin bottom by footer height */
-    margin-top: 150px;
+    /*margin-top: 90px;*/
     margin-bottom: 60px;
 }
 .footer {
