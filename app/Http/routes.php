@@ -1,6 +1,21 @@
 <?php
-Route::get('/test', function () {
+use Cropan\Picture;
+use Illuminate\Database\QueryException;
+use Jenssegers\ImageHash\ImageHash;
 
+Route::get('/test', function () {
+    $hasher = new ImageHash;
+
+    $pictures = Picture::whereNull('hash')->get();
+
+    $pictures->each(function (Picture $picture) use ($hasher) {
+        try {
+            $picture->hash = $hasher->hash($picture->url);
+            $picture->save();
+        } catch (Exception $e) {
+            var_dump($picture->id);
+        }
+    });
 });
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);

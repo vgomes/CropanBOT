@@ -41,8 +41,8 @@ class SaveDailyStats extends Command
      */
     public function handle()
     {
-        $begin = Carbon::parse(PicStatsLog::latest('date')->first()->date);
-        $begin->addDay();
+        $begin = Carbon::parse(PicStatsLog::orderBy('date', 'asc')->first()->date);
+        $begin->startOfDay();
 
         $end = Carbon::yesterday()->endOfDay();
 
@@ -58,16 +58,29 @@ class SaveDailyStats extends Command
             $votes_yes = Vote::yes()->whereDate('created_at', '=', $date)->get()->count();
             $votes_no = Vote::no()->whereDate('created_at', '=', $date)->get()->count();
 
-            PicStatsLog::create([
-                'date' => $date,
-                'sent' => $sent,
-                'published' => $published,
-                'images_positive' => $images_positive,
-                'images_negative' => $images_negative,
-                'votes' => $votes,
-                'votes_yes' => $votes_yes,
-                'votes_no' => $votes_no
-            ]);
+            $item = PicStatsLog::where('date', $date)->get()->first();
+
+            if (is_null($item)) {
+                $item = PicStatsLog::create([
+                    'date' => $date,
+                    'sent' => $sent,
+                    'published' => $published,
+                    'images_positive' => $images_positive,
+                    'images_negative' => $images_negative,
+                    'votes' => $votes,
+                    'votes_yes' => $votes_yes,
+                    'votes_no' => $votes_no
+                ]);
+            } else {
+                $item->sent = $sent;
+                $item->published = $published;
+                $item->images_positive = $images_positive;
+                $item->images_negative = $images_negative;
+                $item->votes = $votes;
+                $item->votes_yes = $votes_yes;
+                $item->votes_no = $votes_no;
+                $item->save();
+            }
 
             $begin->addDay();
         }
