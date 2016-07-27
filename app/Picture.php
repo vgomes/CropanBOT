@@ -139,7 +139,7 @@ class Picture extends Model
             'reply_markup' => json_encode($keyboard)
         ]);
 
-        $this->sent_at = Carbon::now()->toDateString();
+        $this->sent_at = Carbon::now()->toDateTimeString();
         $this->save();
 
         Diary::experienceFromImageGettingPublished($this);
