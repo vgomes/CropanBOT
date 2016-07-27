@@ -139,7 +139,7 @@ return [
          * Slack requires the installation of the maknz/slack package.
          */
         'events' => [
-            'whenBackupWasSuccessful'     => ['log', 'mail'],
+            'whenBackupWasSuccessful'     => ['log'],
             'whenCleanupWasSuccessful'    => ['log'],
             'whenHealthyBackupWasFound'   => ['log'],
             'whenBackupHasFailed'         => ['log', 'mail'],
