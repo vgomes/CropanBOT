@@ -1,6 +1,7 @@
 <?php
 use Doctrine\Common\Cache\FilesystemCache;
 use RemoteImageUploader\Factory;
+use Telegram\Bot\Objects\Update;
 
 /**
  * Get a list of allowed users from the .env file
@@ -117,4 +118,28 @@ function uploadToImgur($url)
         $result = $url;
     }
     return $result;
+}
+
+function getPictureUrlFromTelegram(Update $update) {
+    $text = $update->getMessage()->getText();
+
+    $document = $update->getMessage()->getDocument();
+    if (!is_null($document)) {
+        switch ($document->getMimeType()) {
+            case 'image/png' :
+            case 'image/jpeg' :
+            case 'image/jpg' :
+                $url = urlFromTelegramDocument($document);
+                $text = uploadToImgur($url);
+                break;
+        }
+    }
+
+    $photo = $update->getMessage()->getPhoto();
+    if (!is_null($photo)) {
+        $url = urlFromTelegramPhoto($update->getMessage()->getPhoto());
+        $text = uploadToImgur($url);
+    }
+
+    return $text;
 }
