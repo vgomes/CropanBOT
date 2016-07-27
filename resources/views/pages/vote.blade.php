@@ -3,8 +3,8 @@
 @section('content')
     @if(is_null($picture))
         <div class="container-fluid">
-            <img class="img-thumbnail" src="https://media.giphy.com/media/TUJx6ORB9Y0Uw/giphy.gif" width="500px" />
-            <h2>Ya has votado todas las imágenes</h2>
+            <img class="img-thumbnail" src="https://media.giphy.com/media/TUJx6ORB9Y0Uw/giphy.gif" width="100%" />
+            <h2 class="text-xs-center">Ya has votado todas las imágenes</h2>
         </div>
     @else
         <div class="container-fluid">
