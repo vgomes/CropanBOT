@@ -25,41 +25,47 @@ class Update extends Model
         if (is_null($message)) {
             $message = $update->getEditedMessage();
         }
+
         $updateId = $message->getMessageId();
-        $userId = $message->getFrom()->getId();
-        $type = $message->getChat()->getType();
 
-        if (!is_null($message->getReplyToMessage())) {
-            $reply_to = $message->getReplyToMessage()->getText();
-            // check if it contains a picture url
-            preg_match('/http(?:s)?:\/\/[0-9a-zA-Z;.\/\-?:@=_#&%~,+$]+/', $reply_to, $matches);
+        $update = Update::find($updateId);
 
-            if (count($matches) > 0) {
-                $update->text = $matches[0];
+        if (is_null($update)) {
+            $userId = $message->getFrom()->getId();
+            $type = $message->getChat()->getType();
+
+            if (!is_null($message->getReplyToMessage())) {
+                $reply_to = $message->getReplyToMessage()->getText();
+                // check if it contains a picture url
+                preg_match('/http(?:s)?:\/\/[0-9a-zA-Z;.\/\-?:@=_#&%~,+$]+/', $reply_to, $matches);
+
+                if (count($matches) > 0) {
+                    $update->text = $matches[0];
+                } else {
+                    $reply_to = null;
+                }
+
             } else {
                 $reply_to = null;
             }
+            $text = $message->getText();
+            $content = $update;
+            $date = $message->getDate();
 
-        } else {
-            $reply_to = null;
-        }
-        $text = $message->getText();
-        $content = $update;
-        $date = $message->getDate();
-
-        try {
-            $this->create([
-                'update_id' => $updateId,
-                'user_id' => $userId,
-                'type' => $type,
-                'reply_to' => $reply_to,
-                'text' => $text,
-                'content' => $content,
-                'date' => Carbon::createFromTimestamp($date)
-            ]);
-        } catch (QueryException $e) {
-            // Already stored
+            try {
+                $this->create([
+                    'update_id' => $updateId,
+                    'user_id' => $userId,
+                    'type' => $type,
+                    'reply_to' => $reply_to,
+                    'text' => $text,
+                    'content' => $content,
+                    'date' => Carbon::createFromTimestamp($date)
+                ]);
+            } catch (QueryException $e) {
+                // Already stored
 //            \Log::error($e->getMessage());
+            }
         }
     }
 

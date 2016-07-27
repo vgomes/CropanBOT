@@ -1,7 +1,7 @@
 <?php
-Route::get('/test', function () {
-
-});
+//Route::get('/test', function () {
+//    var_dump(Telegram::getUpdates(['offset' => -20]));
+//});
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
     Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
