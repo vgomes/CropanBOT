@@ -4,6 +4,7 @@ namespace Cropan;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Tumblr\API\Client;
 use Tumblr\API\RequestException;
 
@@ -133,15 +134,20 @@ class Picture extends Model
 
         $keyboard = ["inline_keyboard" => $options];
 
-        \Telegram::sendPhoto([
-            'chat_id' => env('TELEGRAM_GROUP_ID'),
-            'photo' => $this->url,
-            'reply_markup' => json_encode($keyboard)
-        ]);
+        try {
+            $this->sent_at = Carbon::now();
+            $this->save();
 
-        $this->sent_at = Carbon::now()->toDateTimeString();
-        $this->save();
+            \Telegram::sendPhoto([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'photo' => $this->url,
+                'reply_markup' => json_encode($keyboard)
+            ]);
 
-        Diary::experienceFromImageGettingPublished($this);
+            Diary::experienceFromImageGettingPublished($this);
+        } catch (TelegramSDKException $e) {
+            $this->sent_at = null;
+            $this->save();
+        }
     }
 }
