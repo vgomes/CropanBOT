@@ -145,9 +145,6 @@ class Picture extends Model
             ]);
 
             Diary::experienceFromImageGettingPublished($this);
-        } catch (TelegramSDKException $e) {
-            $this->sent_at = null;
-            $this->save();
-        }
+        } catch (TelegramSDKException $e) {}
     }
 }
