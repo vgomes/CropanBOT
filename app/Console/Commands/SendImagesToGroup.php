@@ -2,6 +2,7 @@
 
 namespace Cropan\Console\Commands;
 
+use Carbon\Carbon;
 use Cropan\Picture;
 use Illuminate\Console\Command;
 
@@ -49,5 +50,7 @@ class SendImagesToGroup extends Command
         }
 
         $picture->sendToGroup();
+        $picture->sent_at = Carbon::now();
+        $picture->save();
     }
 }

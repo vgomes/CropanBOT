@@ -138,9 +138,6 @@ class Picture extends Model
             'photo' => $this->url,
             'reply_markup' => json_encode($keyboard)
         ]);
-        
-        $this->sent_at = Carbon::now();
-        $this->save();
 
         Diary::experienceFromImageGettingPublished($this);
     }
