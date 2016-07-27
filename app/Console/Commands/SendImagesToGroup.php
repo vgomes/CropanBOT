@@ -40,19 +40,14 @@ class SendImagesToGroup extends Command
     {
         $lastSentUser = Picture::latest('sent_at')->first()->user_id;
 
-        /** @var Picture $picture */
-        $picture = Picture::where('sent_at', null)->where('user_id', '<>', $lastSentUser)->orderBy('created_at', 'asc')->get()->take(10);
+        $pictures_queued = Picture::queue();
 
-        if ($picture->count() > 0) {
-            $picture = $picture->random(1);
-            $picture->sendToGroup();
+        if ($pictures_queued->count() > 0) {
+            $picture = $pictures_queued->where('user_id', '<>', $lastSentUser)->get()->random();
         } else {
-            $picture = Picture::where('sent_at', null)->orderBy('created_at', 'asc')->get()->take(10);
-
-            if ($picture->count() > 0) {
-                $picture = $picture->random(1);
-                $picture->sendToGroup();
-            }
+            $picture = $pictures_queued->get()->random();
         }
+
+        $picture->sendToGroup();
     }
 }

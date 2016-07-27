@@ -133,12 +133,12 @@ class Picture extends Model
 
         $keyboard = ["inline_keyboard" => $options];
 
-        \Telegram::sendMessage([
+        \Telegram::sendPhoto([
             'chat_id' => env('TELEGRAM_GROUP_ID'),
-            'text' => $this->url,
+            'photo' => $this->url,
             'reply_markup' => json_encode($keyboard)
         ]);
-
+        
         $this->sent_at = Carbon::now();
         $this->save();
 
