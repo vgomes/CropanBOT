@@ -85,6 +85,14 @@ class Picture extends Model
         });
 
         parent::updated(function (Picture $picture) {
+
+            if (is_null($picture->published_at)) {
+
+                if ($picture->score >= 4) {
+                    $picture->uploadToTumblr();
+                }
+            }
+
             if ($picture->score == User::all()->count()) {
                 Diary::experienceFromPerfectImage($picture);
             }

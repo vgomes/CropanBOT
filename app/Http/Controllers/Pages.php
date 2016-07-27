@@ -140,6 +140,13 @@ class Pages extends Controller
         return view('pages.explog')->with('logs', $logs);
     }
 
+    public function sent()
+    {
+        $pictures = \Auth::user()->pictures()->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('pages.index')->with('pictures', $pictures)->with('title', 'Enviadas');
+    }
+
     public function TwitterLogin()
     {
         return \Socialite::driver('twitter')->redirect();

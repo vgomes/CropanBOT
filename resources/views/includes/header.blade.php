@@ -47,6 +47,7 @@
                                         class="label label-info">Lvl {{ Auth::user()->level }}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a href="{{ route("pages.sent") }}" class="dropdown-item">Enviadas</a>
                                 <a class="dropdown-item"
                                    href="{{ route('pages.explog') }}">XP: {{ Auth::user()->current_exp }} / 1000</a>
                                 <progress class="progress progress-striped progress-success dropdown-item"

@@ -12,6 +12,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pending', ['as' => 'pages.pending', 'uses' => 'Pages@pending']);
 
     Route::get('/explog', ['as' => 'pages.explog', 'uses' => 'Pages@explog']);
+    Route::get('/sent', ['as' => 'pages.sent', 'uses' => 'Pages@sent']);
 
     Route::post('/vote', ['as' => 'process.votes', 'uses' => 'Pages@votePost']);
 });
