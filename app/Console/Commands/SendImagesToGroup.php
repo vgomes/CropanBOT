@@ -44,13 +44,19 @@ class SendImagesToGroup extends Command
         $pictures_queued = Picture::queue();
 
         if ($pictures_queued->count() > 0) {
-            $picture = $pictures_queued->where('user_id', '<>', $lastSentUser)->get()->random();
-        } else {
-            $picture = $pictures_queued->get()->random();
+            $pictures = $pictures_queued->where('user_id', '<>', $lastSentUser)->get();
+
+            if ($pictures->count() > 0) {
+                $picture = $pictures->sortBy('created_at')->take(10)->random();
+            } else {
+                $picture = $pictures_queued->sortBy('created_at')->take(10)->random();
+            }
+
+            $picture->sendToGroup();
+            $picture->sent_at = Carbon::now();
+            $picture->save();
         }
 
-        $picture->sendToGroup();
-        $picture->sent_at = Carbon::now();
-        $picture->save();
+
     }
 }
