@@ -2,6 +2,7 @@
 
 namespace Cropan\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
 use Telegram\Bot\Objects\Update;
@@ -42,9 +43,27 @@ class FetchTelegramUpdates extends Command
     {
         $items = Collection::make(\Telegram::getUpdates(['offset' => -100]));
 
-        $items->each(function (Update $update) {
-            $item = new UpdateItem();
-            $item->import($update);
+        $items = $items->filter(function (Update $update) {
+            return isAllowedUserId($update->getMessage()->getFrom()->getId());
+        })
+        ->filter(function (Update $update) {
+            return $update->getMessage()->getChat()->getType() == 'private';
+        })->each(function (Update $update) {
+            $storedUpdate = \Cropan\Update::withTrashed()->where('update_id', $update->getUpdateId())->first();
+
+            if (is_null($storedUpdate)) {
+                $text = getPictureUrlFromTelegram($update);
+
+                $data = [];
+                $data['update_id'] = $update->getUpdateId();
+                $data['user_id'] = $update->getMessage()->getFrom()->getId();
+                $data['type'] = $update->getMessage()->getChat()->getType();
+                $data['text'] = $text;
+                $data['content'] = $update;
+                $data['date'] = Carbon::createFromTimestamp($update->getMessage()->getDate());
+
+                \Cropan\Update::create($data);
+            }
         });
     }
 }

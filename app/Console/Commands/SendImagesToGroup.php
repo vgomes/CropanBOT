@@ -2,6 +2,7 @@
 
 namespace Cropan\Console\Commands;
 
+use Carbon\Carbon;
 use Cropan\Picture;
 use Illuminate\Console\Command;
 
@@ -40,11 +41,22 @@ class SendImagesToGroup extends Command
     {
         $lastSentUser = Picture::latest('sent_at')->first()->user_id;
 
-        $picture = Picture::where('sent_at', null)->where('user_id', '<>', $lastSentUser)->orderBy('created_at', 'asc')->get()->take(10);
+        $pictures_queued = Picture::queue();
 
-        if ($picture->count() > 0) {
-            $picture = $picture->random(1);
+        if ($pictures_queued->count() > 0) {
+            $pictures = $pictures_queued->where('user_id', '<>', $lastSentUser)->get();
+
+            if ($pictures->count() > 0) {
+                $picture = $pictures->sortBy('created_at')->take(10)->random();
+            } else {
+                $picture = $pictures_queued->sortBy('created_at')->take(10)->random();
+            }
+
             $picture->sendToGroup();
+            $picture->sent_at = Carbon::now();
+            $picture->save();
         }
+
+
     }
 }

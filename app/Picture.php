@@ -4,6 +4,7 @@ namespace Cropan;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Tumblr\API\Client;
 use Tumblr\API\RequestException;
 
@@ -84,6 +85,14 @@ class Picture extends Model
         });
 
         parent::updated(function (Picture $picture) {
+
+            if (is_null($picture->published_at)) {
+
+                if ($picture->score >= 4) {
+                    $picture->uploadToTumblr();
+                }
+            }
+
             if ($picture->score == User::all()->count()) {
                 Diary::experienceFromPerfectImage($picture);
             }
@@ -133,15 +142,17 @@ class Picture extends Model
 
         $keyboard = ["inline_keyboard" => $options];
 
-        \Telegram::sendMessage([
-            'chat_id' => env('TELEGRAM_GROUP_ID'),
-            'text' => $this->url,
-            'reply_markup' => json_encode($keyboard)
-        ]);
+        try {
+            $this->sent_at = Carbon::now();
+            $this->save();
 
-        $this->sent_at = Carbon::now();
-        $this->save();
+            \Telegram::sendPhoto([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'photo' => $this->url,
+                'reply_markup' => json_encode($keyboard)
+            ]);
 
-        Diary::experienceFromImageGettingPublished($this);
+            Diary::experienceFromImageGettingPublished($this);
+        } catch (TelegramSDKException $e) {}
     }
 }
