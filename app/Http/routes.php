@@ -1,25 +1,5 @@
 <?php
 
-use Cropan\Picture;
-use Jenssegers\ImageHash\ImageHash;
-
-Route::get('/test', function () {
-    $hasher = new ImageHash();
-
-    set_time_limit(600);
-
-    $hash = $hasher->hash('http://i.imgur.com/tVDJLUi.jpg');
-var_dump($hash);
-    $pictures = Picture::whereNotNull('hash')->get();
-
-    $pictures->each(function (Picture $picture) use ($hasher, $hash) {
-        if ($hasher->distance($picture->hash, $hash) < 5) {
-            var_dump($picture->toArray());
-        }
-    });
-
-});
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
     Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
