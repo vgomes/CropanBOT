@@ -3,6 +3,7 @@
 namespace Cropan\Console;
 
 use Cropan\Console\Commands\FetchTelegramUpdates;
+use Cropan\Console\Commands\HashImages;
 use Cropan\Console\Commands\SaveDailyStats;
 use Cropan\Console\Commands\SendImagesToGroup;
 use Illuminate\Console\Scheduling\Schedule;
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         FetchTelegramUpdates::class,
         SendImagesToGroup::class,
-        SaveDailyStats::class
+        SaveDailyStats::class,
+        HashImages::class
     ];
 
     /**

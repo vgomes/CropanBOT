@@ -1,5 +1,6 @@
 <?php
 use Doctrine\Common\Cache\FilesystemCache;
+use Jenssegers\ImageHash\ImageHash;
 use RemoteImageUploader\Factory;
 use Telegram\Bot\Objects\Update;
 
@@ -121,9 +122,15 @@ function uploadToImgur($url)
 }
 
 function getPictureUrlFromTelegram(Update $update) {
-    $text = $update->getMessage()->getText();
+    if (is_null($update->getMessage())) {
+        $message = $update->getEditedMessage();
+    } else {
+        $message = $update->getMessage();
+    }
 
-    $document = $update->getMessage()->getDocument();
+    $text = $message->getText();
+
+    $document = $message->getDocument();
     if (!is_null($document)) {
         switch ($document->getMimeType()) {
             case 'image/png' :
@@ -135,11 +142,19 @@ function getPictureUrlFromTelegram(Update $update) {
         }
     }
 
-    $photo = $update->getMessage()->getPhoto();
+    $photo = $message->getPhoto();
     if (!is_null($photo)) {
-        $url = urlFromTelegramPhoto($update->getMessage()->getPhoto());
+        $url = urlFromTelegramPhoto($message->getPhoto());
         $text = uploadToImgur($url);
     }
 
     return $text;
+}
+
+function hashPicture($url)
+{
+    $hasher = new ImageHash;
+    $hash = $hasher->hash($url);
+
+    return $hash;
 }
