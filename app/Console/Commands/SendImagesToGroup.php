@@ -49,7 +49,7 @@ class SendImagesToGroup extends Command
             if ($pictures->count() > 0) {
                 $picture = $pictures->sortBy('created_at')->take(10)->random();
             } else {
-                $picture = $pictures_queued->get()->sortBy('created_at')->take(10)->random();
+                $picture = Picture::queue()->get()->sortBy('created_at')->take(10)->random();
             }
 
             $picture->sendToGroup();
