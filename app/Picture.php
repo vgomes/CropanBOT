@@ -80,7 +80,10 @@ class Picture extends Model
 
                     $hasher = new ImageHash();
 
-                    $similar_pictures = Picture::whereNotNull('hash')->get()->filter(function (Picture $picture) use ($hash, $hasher) {
+                    $similar_pictures = Picture::whereNotNull('hash')->get()->filter(function (Picture $picture) use (
+                        $hash,
+                        $hasher
+                    ) {
                         return ($hasher->distance($hash, $picture->hash) < 4);
                     });
 
@@ -123,7 +126,7 @@ class Picture extends Model
 
             if (is_null($picture->published_at)) {
 
-                if ($picture->score >= 4) {
+                if ($picture->yes >= 4) {
                     $picture->uploadToTumblr();
                 }
             }
@@ -142,24 +145,26 @@ class Picture extends Model
     public function uploadToTumblr()
     {
         if (\App::environment('production')) {
-            try {
-                // publish to Tumblr
-                $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
-                $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
-                $client->createPost(env('TUMBLR_BLOG'), [
-                    'type' => 'photo',
-                    'state' => 'queue',
-                    'tags' => env('TUMBLR_TAGS'),
-                    'source' => $this->url
-                ]);
+            if (is_null($this->published_at)) {
+                try {
+                    $this->published_at = Carbon::now();
+                    $this->save();
 
-                $this->published_at = Carbon::now();
-                $this->save();
-            } catch (RequestException $e) {
-                \Log::alert("Problem uploading: " . $this->url);
+                    // publish to Tumblr
+                    $client = new Client(env('TUMBLR_CONSUMER_KEY'), env('TUMBLR_CONSUMER_SECRET'));
+                    $client->setToken(env('TUMBLR_TOKEN'), env('TUMBLR_TOKEN_SECRET'));
+                    $client->createPost(env('TUMBLR_BLOG'), [
+                        'type' => 'photo',
+                        'state' => 'queue',
+                        'tags' => env('TUMBLR_TAGS'),
+                        'source' => $this->url
+                    ]);
+                } catch (RequestException $e) {
+                    \Log::alert("Problem uploading: " . $this->url);
+                }
+
+                Diary::experienceFromImageGoingToTumblr($this);
             }
-
-            Diary::experienceFromImageGoingToTumblr($this);
         }
     }
 
@@ -188,6 +193,7 @@ class Picture extends Model
             ]);
 
             Diary::experienceFromImageGettingPublished($this);
-        } catch (TelegramSDKException $e) {}
+        } catch (TelegramSDKException $e) {
+        }
     }
 }

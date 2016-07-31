@@ -1,5 +1,4 @@
 <?php
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', ['as' => 'pages.index', 'uses' => 'Pages@index']);
     Route::get('/history', ['as' => 'pages.history', 'uses' => 'Pages@history']);
