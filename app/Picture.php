@@ -182,7 +182,7 @@ class Picture extends Model
 
         $keyboard = ["inline_keyboard" => $options];
 
-        try {
+//        try {
             $this->sent_at = Carbon::now();
             $this->save();
 
@@ -193,7 +193,7 @@ class Picture extends Model
             ]);
 
             Diary::experienceFromImageGettingPublished($this);
-        } catch (TelegramSDKException $e) {
-        }
+//        } catch (TelegramSDKException $e) {
+//        }
     }
 }
