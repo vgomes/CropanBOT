@@ -190,18 +190,30 @@ class Picture extends Model
 
         $keyboard = ["inline_keyboard" => $options];
 
-//        try {
+        try {
+            if (ends_with($this->url, '.gif')) {
+                \Telegram::sendDocument([
+                    'chat_id' => env('TELEGRAM_GROUP_ID'),
+                    'document' => $this->url,
+                    'reply_markup' => json_encode($keyboard)
+                ]);
+            } else {
+                \Telegram::sendPhoto([
+                    'chat_id' => env('TELEGRAM_GROUP_ID'),
+                    'photo' => $this->url,
+                    'reply_markup' => json_encode($keyboard)
+                ]);
+            }
+
             $this->sent_at = Carbon::now();
             $this->save();
 
-            \Telegram::sendPhoto([
-                'chat_id' => env('TELEGRAM_GROUP_ID'),
-                'photo' => $this->url,
-                'reply_markup' => json_encode($keyboard)
-            ]);
-
             Diary::experienceFromImageGettingPublished($this);
-//        } catch (TelegramSDKException $e) {
-//        }
+        } catch (TelegramSDKException $e) {
+            $this->sent_at = null;
+            $this->save();
+
+            \Log::alert("Problem with $this->url | " . $e->getMessage());
+        }
     }
 }
