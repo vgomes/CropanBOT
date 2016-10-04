@@ -84,12 +84,10 @@ class Picture extends Model
 
                     $hasher = new ImageHash();
 
-                    $similar_pictures = Picture::whereNotNull('hash')->get()->filter(function (Picture $picture) use (
-                        $hash,
-                        $hasher
-                    ) {
-                        return ($hasher->distance($hash, $picture->hash) < 4);
-                    });
+                    $similar_pictures = Picture::whereNotNull('hash')->get()
+                        ->filter(function (Picture $picture) use ($hash, $hasher) {
+                            return ($hasher->distance($hash, $picture->hash) < 4);
+                        });
 
                     if ($similar_pictures->count() > 0) {
                         \Telegram::sendPhoto([
