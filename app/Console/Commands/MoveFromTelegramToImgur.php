@@ -12,7 +12,7 @@ class MoveFromTelegramToImgur extends Command
      *
      * @var string
      */
-    protected $signature = 'iamges:telegramToImgur';
+    protected $signature = 'images:telegramToImgur';
 
     /**
      * The console command description.
