@@ -4,6 +4,7 @@ namespace Cropan\Console;
 
 use Cropan\Console\Commands\FetchTelegramUpdates;
 use Cropan\Console\Commands\HashImages;
+use Cropan\Console\Commands\MoveFromTelegramToImgur;
 use Cropan\Console\Commands\SaveDailyStats;
 use Cropan\Console\Commands\SendImagesToGroup;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
         FetchTelegramUpdates::class,
         SendImagesToGroup::class,
         SaveDailyStats::class,
-        HashImages::class
+        HashImages::class,
+        MoveFromTelegramToImgur::class
     ];
 
     /**
