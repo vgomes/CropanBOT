@@ -38,7 +38,7 @@ class MoveFromTelegramToImgur extends Command
      */
     public function handle()
     {
-        $images = Picture::where('url', 'LIKE', 'api.telegram.org')->get();
+        $images = Picture::where('url', 'LIKE', '%api.telegram.org%')->get();
 
         $images->each(function (Picture $picture) {
             $picture->url = uploadToImgur($picture->url);
