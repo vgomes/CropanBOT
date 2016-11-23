@@ -42,7 +42,7 @@ class MoveFromTelegramToImgur extends Command
 
         $images->each(function (Picture $picture) {
             $picture->url = uploadToImgur($picture->url);
-            $picture->save();
+            $picture->save();;
         });
 
         return true;
