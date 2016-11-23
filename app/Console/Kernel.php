@@ -43,5 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')->hourly();
         $schedule->command('backup:monitor')->dailyAt('01:00');
         $schedule->command('backup:clean')->dailyAt('02:00');
+
+        $schedule->command('images:telegramToImgur')->hourly();
     }
 }
