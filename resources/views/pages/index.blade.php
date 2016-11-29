@@ -22,8 +22,8 @@
     }
 
     .jumbotron {
-        margin-top: 8em;
-        padding: 2rem 0em;
+        margin-top: 10em;
+        padding: 2em 0em;
     }
 </style>
 @endpush
