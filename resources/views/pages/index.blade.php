@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="jumbotron text-xs-center">
-        <h1 class="display-3">Cropan Gourmet</h1>
-        <br>
-        <p class="lead">El club de caballeros más selecto de todo el internec.</p>
-        <br>
-        <p><a href="{{ route('login.twitter') }}" class="btn btn-lg btn-primary">Entrar</a></p>
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="jumbotron text-center">
+                <h1>Cropan Gourmet</h1>
+                <br>
+                <p class="lead">El club de caballeros más selecto de todo el internec.</p>
+                <br>
+                <p><a href="{{ route('login.twitter') }}" class="btn btn-lg btn-primary">Entrar</a></p>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -18,8 +22,8 @@
     }
 
     .jumbotron {
-        margin-top: 8rem;
-        padding: 2rem 0rem;
+        margin-top: 8em;
+        padding: 2rem 0em;
     }
 </style>
 @endpush
