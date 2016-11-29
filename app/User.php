@@ -35,6 +35,6 @@ class User extends Authenticatable
 
     public function pictures()
     {
-        return $this->hasMany(Picture::class);
+        return $this->hasMany(Picture::class, 'user_id', 'telegram_id');
     }
 }

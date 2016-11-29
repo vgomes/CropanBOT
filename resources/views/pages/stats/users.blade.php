@@ -1,132 +1,134 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3>Estadísticas de usuarios</h3>
+    <div class="container">
+        <h3>Estadísticas de usuarios</h3>
 
-    <hr>
+        <hr>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h5 class="text-xs-center">Estadísticas globales</h5>
-            <div class="graph" id="usersBarGraph"></div>
-        </div>
-    </div>
-
-    <hr>
-
-    <br>
-    <br>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-9">
-                <h5 class="text-xs-center">Ratio de enviadas a Tumblr</h5>
-                <div class="graph" id="usersTumblrRatioBarGraph"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="text-center">Estadísticas globales</h5>
+                <div class="graph" id="usersBarGraph"></div>
             </div>
+        </div>
 
-            <div class="col-md-3">
-                <div>
-                    <h5 class="text-xs-center">Ratio enviadas a Tumblr</h5>
-                    <table class="table table-sm">
-                        <thead>
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Ratio</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($usersBarGraph as $user)
+        <hr>
+
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-9">
+                    <h5 class="text-center">Ratio de enviadas a Tumblr</h5>
+                    <div class="graph" id="usersTumblrRatioBarGraph"></div>
+                </div>
+
+                <div class="col-md-3">
+                    <div>
+                        <h5 class="text-xs-center">Ratio enviadas a Tumblr</h5>
+                        <table class="table table-sm">
+                            <thead>
                             <tr>
-                                <th scope="row">{{ $user['nickname'] }}</th>
-                                <td>{{ $user['publishedRatio'] }}</td>
+                                <th>Usuario</th>
+                                <th>Ratio</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($usersBarGraph as $user)
+                                <tr>
+                                    <th scope="row">{{ $user['nickname'] }}</th>
+                                    <td>{{ $user['publishedRatio'] }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <hr>
+        <hr>
 
-    <br>
-    <br>
+        <br>
+        <br>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="graph" id="usersVotesBarGraph"></div>
-        </div>
-    </div>
-
-    <hr>
-
-    <br>
-    <br>
-
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="text-xs-center">YLD / No (%)</h5>
-            <table class="table table-sm">
-                <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>YLD</th>
-                    <th>No</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach(array_reverse(array_sort($usersVotesBarGraph, function ($user) {
-                    return $user['yes'];
-                }), true) as $user)
-                    <tr>
-                        <th scope="row">{{ $user['nickname'] }}</th>
-                        <td class="text-success">{{ $user['yes'] }}</td>
-                        <td class="text-danger">{{ $user['no'] }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="graph" id="usersVotesBarGraph"></div>
+            </div>
         </div>
 
-        <div class="col-md-4">
-            <h5 class="text-xs-center">Gusto peculiar</h5>
-            <table class="table table-sm">
-                <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Veces</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($uncommonTaste as $user)
-                    <tr>
-                        <th scope="row">{{ $user->nickname }}</th>
-                        <td>{{ $user->times }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+        <hr>
 
-        <div class="col-md-4">
-            <h5 class="text-xs-center">Puntilloso</h5>
-            <table class="table table-sm">
-                <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Veces</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($nitPicker as $user)
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="text-center">YLD / No (%)</h5>
+                <table class="table table-sm">
+                    <thead>
                     <tr>
-                        <th scope="row">{{ $user->nickname }}</th>
-                        <td>{{ $user->times }}</td>
+                        <th>Usuario</th>
+                        <th>YLD</th>
+                        <th>No</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach(array_reverse(array_sort($usersVotesBarGraph, function ($user) {
+                        return $user['yes'];
+                    }), true) as $user)
+                        <tr>
+                            <th scope="row">{{ $user['nickname'] }}</th>
+                            <td class="text-success">{{ $user['yes'] }}</td>
+                            <td class="text-danger">{{ $user['no'] }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <h5 class="text-center">Gusto peculiar</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Veces</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($uncommonTaste as $user)
+                        <tr>
+                            <th scope="row">{{ $user->nickname }}</th>
+                            <td>{{ $user->times }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-4">
+                <h5 class="text-center">Puntilloso</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Veces</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($nitPicker as $user)
+                        <tr>
+                            <th scope="row">{{ $user->nickname }}</th>
+                            <td>{{ $user->times }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
