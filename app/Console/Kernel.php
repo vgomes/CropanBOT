@@ -29,6 +29,15 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('telegram:getupdates')->everyMinute();
         $schedule->command('telegram:sendImageGroup')->cron("0 0,1,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 * * *");
+
+        $schedule->command('stats:save')->dailyAt('0:15');
+
+        // Backups
+        $schedule->command('backup:run')->hourly();
+        $schedule->command('backup:monitor')->dailyAt('01:00');
+        $schedule->command('backup:clean')->dailyAt('02:00');
+
+        $schedule->command('images:telegramToImgur')->hourly();
     }
 
     /**
