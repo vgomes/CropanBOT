@@ -2,39 +2,39 @@
 
 namespace Cropan;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $primaryKey = 'telegram_id';
+    use Notifiable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'nickname',
-        'telegram_id',
+        'name', 'email', 'password',
     ];
 
-    protected $hidden = ['remember_token'];
-
-    protected $appends = ['level', 'current_exp'];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
     // relationships
     public function votes()
     {
-        return $this->hasMany(Vote::class);
+        return $this->hasMany(Vote::class, 'user_id', 'telegram_id');
     }
 
     public function pictures()
     {
         return $this->hasMany(Picture::class);
-    }
-
-    public function getLevelAttribute()
-    {
-        return (int) ($this->exp / 1000) + 1;
-    }
-
-    public function getCurrentExpAttribute()
-    {
-        return (int) ($this->exp % 1000);
     }
 }

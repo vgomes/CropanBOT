@@ -2,9 +2,9 @@
 
 namespace Cropan\Http\Requests;
 
-use Cropan\Http\Requests\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
-class VoteRequest extends Request
+class VoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -150,11 +150,3 @@ function getPictureUrlFromTelegram(Update $update) {
 
     return $text;
 }
-
-function hashPicture($url)
-{
-    $hasher = new ImageHash;
-    $hash = $hasher->hash($url);
-
-    return $hash;
-}

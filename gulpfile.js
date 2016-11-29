@@ -1,4 +1,6 @@
-var elixir = require('laravel-elixir');
+const elixir = require('laravel-elixir');
+
+require('laravel-elixir-vue-2');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,22 +13,24 @@ var elixir = require('laravel-elixir');
  |
  */
 
-elixir(function(mix) {
-    mix.phpUnit();
+// elixir(mix => {
+//     mix.sass('app.scss')
+//        .webpack('app.js');
+// });
 
+elixir(function (mix) {
     mix.styles([
         'vendor/bootstrap/dist/css/bootstrap.css',
-        'vendor/lity/dist/lity.css',
-        'vendor/tether/dist/css/tether.css',
+        'vendor/select2/dist/css/select2.min.css',
         'css/cropan.css'
-    ], 'public/css/style.css', 'resources/assets');
+    ], 'public/css/app.css', 'resources/assets');
 
     mix.scripts([
         'vendor/jquery/dist/jquery.min.js',
-        'vendor/tether/dist/js/tether.js',
-        'vendor/bootstrap/dist/js/bootstrap.js',
-        'vendor/lity/dist/lity.js'
-    ], 'public/js/script.js', 'resources/assets');
+        'vendor/bootstrap/dist/js/bootstrap.min.js',
+        'vendor/select2/dist/js/select2.min.js'
+    ], 'public/js/app.js', 'resources/assets');
 
-    mix.copy('resources/assets/images', 'public/images')
+    mix.copy('resources/assets/vendor/bootstrap/fonts/', 'public/fonts/');
+    mix.copy('resources/assets/img/', 'public/img/');
 });

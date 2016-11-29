@@ -17,7 +17,7 @@ class Diary extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'telegram_id');
     }
 
     public static function addXp(Diary $entry)

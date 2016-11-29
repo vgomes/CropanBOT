@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    protected $table = 'votes';
     protected $fillable = ['picture_id', 'user_id', 'vote'];
+    protected $casts = ['vote' => 'boolean'];
 
     // Relationships
     public function picture()
@@ -44,7 +44,7 @@ class Vote extends Model
             $vote->picture->no = Vote::where('picture_id', $vote->picture_id)
                 ->where('vote', false)
                 ->get()->count();
-            
+
             $vote->picture->save();
         });
 

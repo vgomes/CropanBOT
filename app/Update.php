@@ -2,12 +2,8 @@
 
 namespace Cropan;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\QueryException;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use \Telegram\Bot\Objects\Update as UpdateObject;
 
 class Update extends Model
 {
@@ -22,7 +18,7 @@ class Update extends Model
 
         static::created(function (Update $update) {
             Picture::create([
-                'url' => $update->text,
+                'url'     => $update->text,
                 'user_id' => $update->user_id
             ]);
 
