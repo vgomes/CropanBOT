@@ -177,7 +177,7 @@ class PagesCtrl extends Controller
 
     public function unnamed()
     {
-        $picture = Picture::doesntHave('people')->get()->random();
+        $picture = Picture::sent()->doesntHave('people')->get()->random();
         $vote = Vote::wherePictureId($picture->id)
             ->whereUserId(\Auth::user()->telegram_id)
             ->first();
