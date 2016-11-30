@@ -101,6 +101,8 @@ class PagesCtrl extends Controller
                     ->get()
                     ->sortByDesc(function (Person $person) {
                         return $person->pictures->avg('score');
+                    })->filter(function (Person $person) {
+                        return ($person->pictures->count() > 4);
                     });
 
                 return view("pages.directory.rating")->with('people', $people);
