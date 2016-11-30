@@ -30,7 +30,7 @@
                                         break;
                                 }
                             @endphp ">{{ $person->rating }}</span></a>
-                        <a href="" class="btn btn-default">{{ $person->name }}</a>
+                        <a href="{{ route('pages.directory.person', ['slug' => $person->slug]) }}" class="btn btn-default">{{ $person->name }}</a>
                     </div>
                     @endforeach
                 </div>
