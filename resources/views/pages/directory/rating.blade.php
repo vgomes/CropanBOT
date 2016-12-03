@@ -10,22 +10,22 @@
                             <a href="" class="btn btn-default disabled"><span class="label label-default">{{ $person->pictures->count() }}</span></a>
                             <a class="btn btn-default disabled"><span class="label @php
                                 switch (true) {
-                                    case ($person->pictures->avg('score') > 7 ) :
+                                    case ($person->rating > 7 ) :
                                             echo "label-info";
                                             break;
-                                    case ($person->pictures->avg('score') > 3 ) :
+                                    case ($person->rating > 3 ) :
                                         echo "label-success";
                                         break;
-                                    case ($person->pictures->avg('score') > 0 ) :
+                                    case ($person->rating > 0 ) :
                                         echo "label-primary";
                                         break;
-                                    case ($person->pictures->avg('score') == 0 ) :
+                                    case ($person->rating == 0 ) :
                                         echo "label-default";
                                         break;
-                                    case ($person->pictures->avg('score') > -4 ) :
+                                    case ($person->rating > -4 ) :
                                         echo "label-warning";
                                         break;
-                                    case ($person->pictures->avg('score') < -3 ) :
+                                    case ($person->rating < -3 ) :
                                         echo "label-danger";
                                         break;
                                 }

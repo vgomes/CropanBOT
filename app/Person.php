@@ -28,7 +28,9 @@ class Person extends Model
     // Attributes
     public function getRatingAttribute()
     {
-        return number_format($this->pictures->avg('score'), 2);
+        return number_format($this->pictures->avg(function (Picture $picture) {
+            return 10 * ($picture->yes / ($picture->yes + $picture->no));
+        }), 2);
     }
 
     // Events

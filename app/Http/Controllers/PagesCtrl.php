@@ -100,7 +100,7 @@ class PagesCtrl extends Controller
                     ->has('pictures')
                     ->get()
                     ->sortByDesc(function (Person $person) {
-                        return $person->pictures->avg('score');
+                        return $person->rating;
                     })->filter(function (Person $person) {
                         return ($person->pictures->count() > 4);
                     });
