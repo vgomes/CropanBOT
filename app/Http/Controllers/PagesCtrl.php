@@ -44,7 +44,7 @@ class PagesCtrl extends Controller
      */
     public function history()
     {
-        $pictures = Picture::sent()->orderBy('published_at', 'desc')->orderBy('id', 'desc')->paginate(16);
+        $pictures = Picture::sent()->orderBy('sent_at', 'desc')->orderBy('id', 'desc')->paginate(16);
 
         return view('pages.home')->with('pictures', $pictures);
     }
