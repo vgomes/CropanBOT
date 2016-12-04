@@ -171,6 +171,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Telegram\Bot\Laravel\TelegramServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
+        \Cropan\Providers\DropboxFilesystemServiceProvider::class,
 
         /*
          * Application Service Providers...
