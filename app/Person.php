@@ -29,6 +29,10 @@ class Person extends Model
     public function getRatingAttribute()
     {
         return number_format($this->pictures->avg(function (Picture $picture) {
+            if (($picture->yes + $picture->no) == 0) {
+                return 0;
+            }
+
             return 10 * ($picture->yes / ($picture->yes + $picture->no));
         }), 2);
     }
