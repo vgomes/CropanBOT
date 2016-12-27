@@ -47,5 +47,10 @@ $router->group(['middleware' => 'auth'], function (Router $router) {
 });
 
 $router->get('/test', function () {
-    $a = Diary::all()->random(1);
+    Telegram::sendAudio([
+        'chat_id' => env('TELEGRAM_GROUP_ID'),
+        'audio' => storage_path('app/public/01.mp3'),
+        'performer' => 'CropanBot',
+        'title' => ''
+    ]);
 });

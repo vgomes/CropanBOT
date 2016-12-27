@@ -38,6 +38,56 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->dailyAt('02:00');
 
         $schedule->command('images:telegramToImgur')->hourly();
+
+        // Inocentada
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/01.mp3')
+            ]);
+        })->cron("30 7 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/02.mp3')
+            ]);
+        })->cron("01 8 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/03.mp3')
+            ]);
+        })->cron("30 10 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/04.mp3')
+            ]);
+        })->cron("05 11 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/05.mp3')
+            ]);
+        })->cron("30 17 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/06.mp3')
+            ]);
+        })->cron("45 20 28 12 *");
+
+        $schedule->call(function () {
+            \Telegram::sendAudio([
+                'chat_id' => env('TELEGRAM_GROUP_ID'),
+                'audio' => storage_path('app/public/07.mp3')
+            ]);
+        })->cron("45 23 28 12 *");
     }
 
     /**
