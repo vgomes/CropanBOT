@@ -18,9 +18,7 @@ return [
                  * The list of directories that should be part of the backup. You can
                  * specify individual files as well.
                  */
-                'include' => [
-                    base_path(),
-                ],
+                'include' => [],
 
                 /*
                  * These directories will be excluded from the backup.
@@ -76,12 +74,12 @@ return [
             /*
              * The amount of days that all daily backups must be kept.
              */
-            'keepDailyBackupsForDays' => 16,
+            'keepDailyBackupsForDays' => 10,
 
             /*
              * The amount of weeks of which one weekly backup must be kept.
              */
-            'keepWeeklyBackupsForWeeks' => 8,
+            'keepWeeklyBackupsForWeeks' => 4,
 
             /*
              * The amount of months of which one monthly backup must be kept.
