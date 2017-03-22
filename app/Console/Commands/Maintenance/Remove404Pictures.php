@@ -4,6 +4,7 @@ namespace Cropan\Console\Commands\Maintenance;
 
 use Cropan\Picture;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Console\Command;
 
 class Remove404Pictures extends Command
@@ -45,12 +46,16 @@ class Remove404Pictures extends Command
         $pictures = Picture::all();
 
         $pictures->each(function (Picture $picture) {
-             $answer = $this->client->get($picture->url, ['http_errors' => false]);
+            try {
+                $answer = $this->client->get($picture->url, ['http_errors' => false]);
 
-             if ($answer->getStatusCode() === 404) {
-                 \Log::info("Deleting image $picture->id: $picture->url");
-                 $picture->delete();
-             }
+                if ($answer->getStatusCode() === 404) {
+                    \Log::info("Deleting image $picture->id: $picture->url");
+                    $picture->delete();
+                }
+            } catch (ConnectException $exception) {
+                \Log::error($exception);
+            }
         });
 
         return true;
