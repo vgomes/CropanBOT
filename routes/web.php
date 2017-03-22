@@ -13,6 +13,7 @@
 
 /** @var Router $router */
 use Cropan\Diary;
+use Cropan\Picture;
 use Illuminate\Routing\Router;
 
 $router->pattern('order', 'asc|desc');
@@ -44,8 +45,4 @@ $router->group(['middleware' => 'auth'], function (Router $router) {
     $router->post('/vote', ['as' => 'pages.vote', 'uses' => 'PagesCtrl@vote']);
     $router->post('/tag', ['as' => 'pages.tag', 'uses' => 'PagesCtrl@tag']);
     $router->post('/untag', ['as' => 'pages.untag', 'uses' => 'PagesCtrl@untag']);
-});
-
-$router->get('/test', function () {
-    $a = Diary::all()->random(1);
 });
