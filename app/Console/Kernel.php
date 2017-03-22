@@ -39,6 +39,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->dailyAt('02:00');
 
         $schedule->command('images:telegramToImgur')->hourly();
+
+        $schedule->command('maintenance:404')->dailyAt('03:30');
     }
 
     /**
