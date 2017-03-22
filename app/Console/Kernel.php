@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         \Cropan\Console\Commands\Telegram\FetchUpdates::class,
         \Cropan\Console\Commands\Telegram\SendImageToGroup::class,
         \Cropan\Console\Commands\Telegram\MoveFromTelegramToImgur::class,
-        \Cropan\Console\Commands\SaveDailyStats::class
+        \Cropan\Console\Commands\SaveDailyStats::class,
+        \Cropan\Console\Commands\Maintenance\Remove404Pictures::class
     ];
 
     /**

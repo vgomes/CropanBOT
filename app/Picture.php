@@ -137,6 +137,19 @@ class Picture extends Model
                 Diary::experienceFromDisgraceImage($picture);
             }
         });
+
+        parent::deleting(function (Picture $picture) {
+            // delete votes
+            Vote::wherePictureId($picture->id)->get()->each(function (Vote $vote) use ($picture) {
+                \Log::info("Deleting vote for image $picture->id: $picture->url");
+                $vote->delete();
+            });
+
+            // delete people_pictures entries
+            \DB::table('people_pictures')->where('picture_id', '=', $picture->id)->delete();
+
+            return true;
+        });
     }
 
     // Functions
