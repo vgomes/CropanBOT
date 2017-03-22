@@ -106,9 +106,7 @@ class Picture extends Model
                 return false;
             }
 
-            if (!str_contains($picture->url, 'imgur.com')) {
-                $picture->url = uploadToImgur($picture->url);
-            }
+            $picture->url = uploadToImgur($picture->url);
 
             return true;
         });

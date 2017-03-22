@@ -34,7 +34,7 @@ class Diary extends Model
 
         // Exp when sending image to telegram bot
         $entry->xp = (int) $xp;
-        $entry->user_id = $picture->user->telegram_id;
+        $entry->user_id = $picture->user()->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp por enviar una imagen a CropanBot";
 
@@ -50,7 +50,7 @@ class Diary extends Model
         $entry = new Diary();
 
         $entry->xp = (int) $xp;
-        $entry->user_id = $picture->user->telegram_id;
+        $entry->user_id = $picture->user()->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha llegado al grupo de Telegram";
 
@@ -66,7 +66,7 @@ class Diary extends Model
         $entry = new Diary();
 
         $entry->xp = (int) $xp;
-        $entry->user_id = $picture->user->telegram_id;
+        $entry->user_id = $picture->user()->telegram_id;
         $entry->picture_id = $picture->id;
         $entry->concept = "Recibes $entry->xp xp porque tu imagen ha sido enviada a la cola de Tumblr";
 
