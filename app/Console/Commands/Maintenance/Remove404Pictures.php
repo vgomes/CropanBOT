@@ -54,7 +54,7 @@ class Remove404Pictures extends Command
                     $picture->delete();
                 }
             } catch (ConnectException $exception) {
-                \Log::error($exception);
+                \Log::error($exception->getMessage());
             }
         });
 
