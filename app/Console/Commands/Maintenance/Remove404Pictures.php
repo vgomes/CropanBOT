@@ -45,7 +45,7 @@ class Remove404Pictures extends Command
         $pictures = Picture::all();
 
         $pictures->each(function (Picture $picture) {
-             $answer = $this->client->get($picture->url);
+             $answer = $this->client->get($picture->url, ['http_errors' => false]);
 
              if ($answer->getStatusCode() === 404) {
                  \Log::info("Deleting image $picture->id: $picture->url");
