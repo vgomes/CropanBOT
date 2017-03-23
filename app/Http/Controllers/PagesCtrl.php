@@ -57,9 +57,11 @@ class PagesCtrl extends Controller
     public function ranking($order = 'desc')
     {
         if ($order == 'desc') {
-            $pictures = Picture::sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('updated_at', 'desc')->paginate(16);
+            $pictures = Picture::sent()->orderBy('score', 'desc')->orderBy('yes', 'desc')->orderBy('updated_at',
+                'desc')->paginate(16);
         } else {
-            $pictures = Picture::sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('updated_at', 'desc')->paginate(16);
+            $pictures = Picture::sent()->orderBy('score', 'asc')->orderBy('no', 'desc')->orderBy('updated_at',
+                'desc')->paginate(16);
         }
 
         return view('pages.home')->with('pictures', $pictures);
@@ -214,17 +216,21 @@ class PagesCtrl extends Controller
     {
         $picture = Picture::findOrFail($request->get('picture_id'));
 
-        foreach ($request->get('people') as $person) {
-            if (is_numeric($person)) { // value is 'id' of person on database
-                try {
-                    $picture->people()->attach($person);
-                } catch (QueryException $exception) {}
-            } else { // value is name for a new person
-                $newPerson = Person::firstOrCreate(['name' => $person]);
+        if ($request->has('people')) {
+            foreach ($request->get('people') as $person) {
+                if (is_numeric($person)) { // value is 'id' of person on database
+                    try {
+                        $picture->people()->attach($person);
+                    } catch (QueryException $exception) {
+                    }
+                } else { // value is name for a new person
+                    $newPerson = Person::firstOrCreate(['name' => $person]);
 
-                try {
-                    $picture->people()->attach($newPerson->id);
-                } catch (QueryException $exception) {}
+                    try {
+                        $picture->people()->attach($newPerson->id);
+                    } catch (QueryException $exception) {
+                    }
+                }
             }
         }
 
@@ -242,7 +248,8 @@ class PagesCtrl extends Controller
 
         try {
             $picture->people()->detach($request->get('person_id'));
-        } catch (QueryException $exception) {}
+        } catch (QueryException $exception) {
+        }
 
         return \Redirect::back();
     }
