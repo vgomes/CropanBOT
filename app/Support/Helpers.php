@@ -1,5 +1,6 @@
 <?php
 use Doctrine\Common\Cache\FilesystemCache;
+use InstagramScraper\Exception\InstagramException;
 use InstagramScraper\Instagram;
 use Jenssegers\ImageHash\ImageHash;
 use RemoteImageUploader\Factory;
@@ -153,11 +154,14 @@ function getPictureUrlFromTelegram(Update $update) {
 }
 
 function getPictureUrlFromInstagram($url) {
-    $image = Instagram::getMediaByUrl($url);
 
-    if ($image->type === 'image') {
-        return (!is_null($image->imageHighResolutionUrl)) ? $image->imageHighResolutionUrl : $image->imageStandardResolutionUrl;
-    }
+    try {
+        $image = Instagram::getMediaByUrl($url);
+
+        if ($image->type === 'image') {
+            return (!is_null($image->imageHighResolutionUrl)) ? $image->imageHighResolutionUrl : $image->imageStandardResolutionUrl;
+        }
+    } catch (InstagramException $exception) {}
 
     return null;
 }

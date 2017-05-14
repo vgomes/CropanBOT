@@ -74,12 +74,22 @@ class Picture extends Model
             preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $picture->url, $match);
             $picture->url = $match[0][0];
 
-            $regex = "/(https?:\/\/)?([\w\.]*)instagram\.com\/p\/([A-Za-z0-9-]*)\/(\?taken-by=[A-Za-z0-9-_]*)?/";
-
-            if (preg_match($regex, $picture->url, $match)) {
-                // it is an instagram link
+            if (str_contains($picture->url, ['instagr.am', 'instagram.com'])) {
                 $url = strtok($picture->url, '?'); // remove ?taken-by=_username_ from url
-                $picture->url = getPictureUrlFromInstagram($url); // replace instagram link by direct link to image
+                $url = getPictureUrlFromInstagram($url); // replace instagram link by direct link to image
+
+                if (is_null($url)) {
+                    // invalid url
+                    \Telegram::sendMessage([
+                        'chat_id'    => $picture->user_id,
+                        'text'       => "*$picture->url* no es una imagen válida",
+                        'parse_mode' => 'Markdown'
+                    ]);
+
+                    return false;
+                } else {
+                    $picture->url = $url;
+                }
             }
 
             // check url is not stored
