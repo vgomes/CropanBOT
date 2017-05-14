@@ -17,7 +17,8 @@
         "tumblr/tumblr": "^0.2.0",
         "spatie/laravel-backup": "^3.8",
         "league/flysystem-dropbox": "^1.0",
-        "jenssegers/imagehash": "^0.4.0"
+        "jenssegers/imagehash": "^0.4.0",
+        "raiym/instagram-php-scraper": "^0.5.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

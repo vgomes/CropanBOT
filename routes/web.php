@@ -12,8 +12,6 @@
 */
 
 /** @var Router $router */
-use Cropan\Diary;
-use Cropan\Picture;
 use Illuminate\Routing\Router;
 
 $router->pattern('order', 'asc|desc');

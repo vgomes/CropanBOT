@@ -1,5 +1,6 @@
 <?php
 use Doctrine\Common\Cache\FilesystemCache;
+use InstagramScraper\Instagram;
 use Jenssegers\ImageHash\ImageHash;
 use RemoteImageUploader\Factory;
 use Telegram\Bot\Objects\Update;
@@ -149,4 +150,14 @@ function getPictureUrlFromTelegram(Update $update) {
     }
 
     return $text;
+}
+
+function getPictureUrlFromInstagram($url) {
+    $image = Instagram::getMediaByUrl($url);
+
+    if ($image->type === 'image') {
+        return (!is_null($image->imageHighResolutionUrl)) ? $image->imageHighResolutionUrl : $image->imageStandardResolutionUrl;
+    }
+
+    return null;
 }
