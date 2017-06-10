@@ -18,7 +18,8 @@
         "spatie/laravel-backup": "^3.8",
         "league/flysystem-dropbox": "^1.0",
         "jenssegers/imagehash": "^0.4.0",
-        "raiym/instagram-php-scraper": "^0.5.8"
+        "raiym/instagram-php-scraper": "^0.5.8",
+        "j0k3r/php-imgur-api-client": "^3.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

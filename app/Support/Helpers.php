@@ -1,9 +1,7 @@
 <?php
-use Doctrine\Common\Cache\FilesystemCache;
+use Imgur\Client;
 use InstagramScraper\Exception\InstagramException;
 use InstagramScraper\Instagram;
-use Jenssegers\ImageHash\ImageHash;
-use RemoteImageUploader\Factory;
 use Telegram\Bot\Objects\Update;
 
 /**
@@ -106,16 +104,19 @@ function urlFromTelegramDocument($document)
  */
 function uploadToImgur($url)
 {
-    $cacher = new FilesystemCache('/tmp');
-    $uploader = Factory::create('Imgur', [
-        'cacher' => $cacher,
-        'api_key' => env('IMGUR_KEY'),
-        'api_secret' => env('IMGUR_SECRET'),
-        'refresh_token' => env('IMGUR_REFRESH_TOKEN')
-    ]);
+    $client = new Client();
+    $client->setOption('client_id', env('IMGUR_KEY'));
+    $client->setOption('client_secret', env('IMGUR_SECRET'));
+
+    $imageData = [
+        'image' => $url,
+        'type'  => 'url',
+    ];
 
     try {
-        $result = $uploader->transload($url);
+        $response = $client->api('image')->upload($imageData);
+        $result = $response['link'];
+
     } catch (\Exception $e) {
         \Log::error($e->getMessage());
         $result = $url;
