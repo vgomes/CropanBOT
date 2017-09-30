@@ -4,8 +4,8 @@ namespace Cropan\Providers;
 
 use Spatie\Dropbox\Client as DropboxClient;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Dropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 use Storage;
 
 class DropboxFilesystemServiceProvider extends ServiceProvider
